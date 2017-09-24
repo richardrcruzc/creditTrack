@@ -1,0 +1,89 @@
+@model PaginatedList<CreditReport.Data.PersonalInformation.Person>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Lista de personas</h2>
+
+<p>
+    <a asp-action="Create">Agregar persona</a>
+</p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Buscar por cédula: <input type="text" name="searchId" value="@ViewData["currentFilter"]" />
+           Nombre: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Buscar" class="btn btn-default" /> |
+            <a asp-action="Index">Retornar</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    Identification
+                       
+                </th>
+                
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">First Name</a>
+                    
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a>
+                    
+                </th>
+               
+                <th>
+                    Gender
+                </th>
+                
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Identification)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+             <td>
+                <a asp-action="Edit" asp-route-id="@item.PersonID">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.PersonID">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.PersonID">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Anterior
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Siguiente
+</a>

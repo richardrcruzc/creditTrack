@@ -1,0 +1,83 @@
+@model CreditReport.Data.PersonalInformation.Person
+
+@{
+    ViewData["Title"] = "Details";
+
+
+
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Consultar Historial Crediticio Persona</h4>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Identification)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Identification)
+        </dd>
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        
+        <dt>
+
+        <dt>
+            <br />
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditHistories)
+            
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th colspan="5">
+                        <div>
+                            <a asp-controller="CreditHistories" asp-action="Create" asp-route-id="@Model.PersonID">Agregar historial</a>  
+                           
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Company)</th>
+                    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th> 
+                    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
+                    
+                </tr>
+                @foreach (var item in Model.CreditHistories)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Company.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreateDate)
+                           
+                        </td>
+                      
+ 
+                    </tr>
+                }
+            </table>
+        </dd>
+
+
+         
+        
+    </dl>
+</div>
+ 

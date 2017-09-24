@@ -1,0 +1,79 @@
+@model PaginatedList<CreditReport.Data.PersonalInformation.Company>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Lista de empresas</h2>
+
+<p>
+    <a asp-action="Create">Crear Nueva</a>
+</p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        
+            Buscar por descripción: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Buscar" class="btn btn-default" /> |
+            <a asp-action="Index">Retornar a la lista</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                       <a asp-action="Index" asp-route-sortOrder="@ViewData["SortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Description</a>
+
+                </th>
+            <th>ContactName</th>
+            <th>Address</th>
+            <th>Phone</th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CompanyID">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.CompanyID">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.CompanyID">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

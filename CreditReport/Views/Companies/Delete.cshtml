@@ -1,0 +1,50 @@
+@model CreditReport.Data.PersonalInformation.Company
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Borrar</h2>
+<div class="alert alert-danger">
+    <strong>Esta seguro de borrar esta Empresa?</strong>
+</div>
+
+<div>
+    <h4>Empresa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContactName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="RowVersion" />
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Regresar</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,68 @@
+@model CreditReport.Data.PersonalInformation.Person
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Borrar</h2>
+ 
+<div class="alert alert-danger">
+    <strong>Esta seguro de querer borrar esta persona?</strong>
+</div>
+
+<div>
+    <h4>Persona</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="PersonID" />
+        <dt>
+            @Html.DisplayNameFor(model => model.Identification)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Identification)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PasswordHash)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PasswordHash)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Avatar)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Avatar)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Regresar</a>
+        </div>
+    </form>
+</div>

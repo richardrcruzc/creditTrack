@@ -1,0 +1,28 @@
+@model PaginatedList<CreditReport.Data.PersonalInformation.Person>
+
+    @{
+    ViewData["Title"] = "Index";
+
+        var alerts = @ViewBag.Info as string;
+    }
+<p>
+    <h2>Consultar persona por numero de cedula</h2>
+</p>
+    <form asp-action="Query" method="get">
+        <div class="form-actions no-color">
+            
+            <p>
+                <label  class="col-md-2 control-label">Número de la cédula:</label>  <input type="text" name="cedula" value="@ViewData[" currentFilter"]" />
+               
+                <input type="submit" value="Buscar" class="btn btn-default" />  
+               
+            </p>
+            @if (!string.IsNullOrWhiteSpace(alerts))
+            {
+            <div class="alert alert-warning">
+                <strong>@ViewBag.Info</strong>
+            </div>
+            }
+        </div>
+    </form>
+  

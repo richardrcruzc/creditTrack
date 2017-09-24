@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  creditreport:
+    image: creditreport
+    build:
+      context: ./CreditReport
+      dockerfile: Dockerfile
