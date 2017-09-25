@@ -122,9 +122,9 @@ namespace CreditReport
 
             app.UseMvcWithDefaultRoute();
 
-            // Set password with the Secret Manager tool.
-            // dotnet user-secrets set SeedUserPW <pw>
-           // var testUserPw = Configuration["SeedUserPW"];
+            //// Set password with the Secret Manager tool.
+            //// dotnet user-secrets set SeedUserPW <pw>
+            //var testUserPw = "Q!w2e3r4"; // Configuration["SeedUserPW"];
 
             //if (String.IsNullOrEmpty(testUserPw))
             //{
@@ -134,7 +134,7 @@ namespace CreditReport
 
             //try
             //{
-            //    SeedData.Initialize(app.ApplicationServices, "Q!w2e3r4").Wait();
+            //    SeedData.Initialize(app.ApplicationServices, testUserPw).Wait();
             //}
             //catch
             //{

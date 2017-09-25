@@ -9,6 +9,15 @@ namespace CreditReport.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(100, ErrorMessage = "El {0} debe de ser almenos {2} y ub maxino de {1} caracteres.", MinimumLength = 6)]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nombre y Apellido")]
+        public string Name { get; set; }
+        [Display(Name = "Nombre Empresa o Negocio")]
+        [DataType(DataType.Text)]
+        public string Empresa { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

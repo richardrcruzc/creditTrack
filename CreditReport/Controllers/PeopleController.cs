@@ -7,6 +7,9 @@ using CreditReport.Data;
 using CreditReport.Data.PersonalInformation;
 using CreditReport.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using CreditReport.Models.People;
+using System.Collections.Generic;
 
 namespace CreditReport.Controllers
 {
@@ -15,8 +18,14 @@ namespace CreditReport.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public PeopleController(ApplicationDbContext context)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+
+        public PeopleController(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
+            _signInManager = signInManager;
+            _userManager = userManager;
             _context = context;    
         }
         // GET: People
@@ -117,16 +126,8 @@ namespace CreditReport.Controllers
             } 
 
             var person = await _context.Persons
-                .Include(c=>c.RelateCompanies)
-                .ThenInclude(r=>r.Company)
-                .Include(a => a.Addresses)
-                .Include(a => a.Inquiries)
-                .ThenInclude(r => r.Subcriptor)
-                .Include(h=>h.CreditHistories)  
-                .Include(c=>c.CreditHistories)
-                .ThenInclude(c => c.Company)
-
-                .AsNoTracking()
+                 .Include(c=>c.CreditHistories)
+                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.PersonID == id);
             if (person == null)
             {
@@ -135,6 +136,60 @@ namespace CreditReport.Controllers
 
             return View(person);
         }
+
+        // GET: People/Create
+        public IActionResult Agregar()
+        {
+            return View();
+        }
+
+        // POST: People/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Agregar(PeopleAddModel p)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = _userManager.GetUserName(User);
+                    var persona = new Person
+                    {
+                        Identification = p.Identification,
+                         LastName =p.LastName,
+                         FirstName = p.FirstName,
+                         Created = DateTime.Now,
+                         CreateBy= user, 
+                    };
+
+                    var credit = new CreditHistory { CreateDate = DateTime.Now, Note = p.Description, Person= persona };
+                    var credits = new List<CreditHistory>();
+                    credits.Add(credit);
+
+                    persona.AddCreditHistory(credits);
+
+                    _context.Add(persona);
+                    
+                    await _context.SaveChangesAsync();
+
+
+                    ModelState.AddModelError("","La Persona ha Sido Creada.");
+                    //return RedirectToAction("Index");
+                }
+            }
+            catch (DbUpdateException  ex )
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("",ex.Message+ " Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+            }
+            return View(p);
+        }
+
+
 
         // GET: People/Create
         public IActionResult Create()
@@ -176,9 +231,7 @@ namespace CreditReport.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Persons
-                 .Include(c => c.RelateCompanies)
-                .ThenInclude(r => r.Company)
+            var person = await _context.Persons 
                 .SingleOrDefaultAsync(m => m.PersonID == id);
             if (person == null)
             {

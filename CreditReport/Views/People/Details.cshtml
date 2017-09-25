@@ -48,8 +48,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Company)</th>
-                    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th> 
+                     <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th> 
                     <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
                     
                 </tr>
@@ -57,10 +56,7 @@
                 {
 
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Company.Description)
-                        </td>
-                        <td>
+                         <td>
                             @Html.DisplayFor(modelItem => item.Note)
                         </td>
                         

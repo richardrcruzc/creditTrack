@@ -9,13 +9,40 @@ using CreditReport.Data.PersonalInformation;
 namespace CreditReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170925025259_credit")]
+    partial class credit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Address", b =>
+                {
+                    b.Property<int>("AddressID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Number");
+
+                    b.Property<int?>("PersonID");
+
+                    b.Property<string>("Street");
+
+                    b.Property<string>("Zip");
+
+                    b.HasKey("AddressID");
+
+                    b.HasIndex("PersonID");
+
+                    b.ToTable("Address");
+                });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.Company", b =>
                 {
@@ -55,6 +82,8 @@ namespace CreditReport.Migrations
 
                     b.Property<string>("OwnerID");
 
+                    b.Property<int?>("PersonID");
+
                     b.Property<string>("State");
 
                     b.Property<int>("Status");
@@ -62,6 +91,8 @@ namespace CreditReport.Migrations
                     b.Property<string>("Zip");
 
                     b.HasKey("ContactId");
+
+                    b.HasIndex("PersonID");
 
                     b.ToTable("Contacts");
                 });
@@ -84,18 +115,62 @@ namespace CreditReport.Migrations
                     b.ToTable("CreditHistory");
                 });
 
+            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Enrollment", b =>
+                {
+                    b.Property<int>("EnrollmentID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("PersonID");
+
+                    b.HasKey("EnrollmentID");
+
+                    b.HasIndex("PersonID");
+
+                    b.ToTable("Enrollment");
+                });
+
+            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Inquiry", b =>
+                {
+                    b.Property<int>("InquiryID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("InquiryType");
+
+                    b.Property<int?>("PersonID");
+
+                    b.Property<int?>("SubcriptorCompanyID");
+
+                    b.HasKey("InquiryID");
+
+                    b.HasIndex("PersonID");
+
+                    b.HasIndex("SubcriptorCompanyID");
+
+                    b.ToTable("Inquiry");
+                });
+
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.Person", b =>
                 {
                     b.Property<int>("PersonID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Avatar");
+
                     b.Property<string>("CreateBy");
 
                     b.Property<DateTime>("Created");
 
+                    b.Property<DateTime>("DOB");
+
+                    b.Property<string>("Email");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<int>("Gender");
 
                     b.Property<string>("Identification")
                         .IsRequired()
@@ -104,6 +179,17 @@ namespace CreditReport.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<int>("MaritalStatus");
+
+                    b.Property<string>("Nationality");
+
+                    b.Property<string>("Ocupation");
+
+                    b.Property<string>("Passport");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired();
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -305,11 +391,43 @@ namespace CreditReport.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Address", b =>
+                {
+                    b.HasOne("CreditReport.Data.PersonalInformation.Person")
+                        .WithMany("Addresses")
+                        .HasForeignKey("PersonID");
+                });
+
+            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Contact", b =>
+                {
+                    b.HasOne("CreditReport.Data.PersonalInformation.Person")
+                        .WithMany("Contacts")
+                        .HasForeignKey("PersonID");
+                });
+
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.CreditHistory", b =>
                 {
                     b.HasOne("CreditReport.Data.PersonalInformation.Person", "Person")
                         .WithMany("CreditHistories")
                         .HasForeignKey("PersonID");
+                });
+
+            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Enrollment", b =>
+                {
+                    b.HasOne("CreditReport.Data.PersonalInformation.Person")
+                        .WithMany("Enrollment")
+                        .HasForeignKey("PersonID");
+                });
+
+            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Inquiry", b =>
+                {
+                    b.HasOne("CreditReport.Data.PersonalInformation.Person", "Person")
+                        .WithMany("Inquiries")
+                        .HasForeignKey("PersonID");
+
+                    b.HasOne("CreditReport.Data.PersonalInformation.Company", "Subcriptor")
+                        .WithMany()
+                        .HasForeignKey("SubcriptorCompanyID");
                 });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.RelateCompany", b =>
@@ -320,7 +438,7 @@ namespace CreditReport.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CreditReport.Data.PersonalInformation.Person", "Person")
-                        .WithMany()
+                        .WithMany("RelateCompanies")
                         .HasForeignKey("PersonID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -16,9 +16,7 @@ namespace CreditReport.Data.PersonalInformation
         public int CreditHistoryID { get; set; }
         [Display(Name = "Persona")]
         public Person Person { get; set; }
-        [Display(Name = "Empresa")]
-        public Company Company { get; set; }
-        [Display(Name = "Descripcion")]
+         [Display(Name = "Descripcion")]
         public string Note { get; set; }
         [Display(Name = "Fecha")] 
         [DataType(DataType.Date)]

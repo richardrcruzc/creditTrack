@@ -19,17 +19,17 @@ namespace CreditReport.Data.PersonalInformation
                 Identification = identification,
                 FirstName = firstname,
                 LastName = lastname,
-                Gender = gender,
-                DOB = bob,
-                Passport = passport, 
-                MaritalStatus = civil,
-                Ocupation = ocupation,
-                Nationality = nationality,
-                Addresses = new List<Address>(),
-                Contacts = new List<Contact>(),
-                Inquiries = new List<Inquiry>(),
-                CreditHistories = new List<CreditHistory>(),
-                RelatedPersons = new List<RelatedPerson>(),
+                //Gender = gender,
+                //DOB = bob,
+                //Passport = passport, 
+                //MaritalStatus = civil,
+                //Ocupation = ocupation,
+                //Nationality = nationality,
+                //Addresses = new List<Address>(),
+                //Contacts = new List<Contact>(),
+                //Inquiries = new List<Inquiry>(),
+                //CreditHistories = new List<CreditHistory>(),
+                //RelatedPersons = new List<RelatedPerson>(),
 
             };
                 return customer;
@@ -47,29 +47,33 @@ namespace CreditReport.Data.PersonalInformation
         #endregion
 
         public int PersonID { get;  set; }
+
+        public DateTime Created { get; set; }
+        public string CreateBy { get; set; }
+         
         [DisplayName("Cédula")]
         [Required(ErrorMessage = "Cédula es requerida.")]
         [Remote("Cedula", "People", ErrorMessage = "No puede registrar este número de cédula ya que existe un registro con esta informaciones.")]
         [StringLength(11, MinimumLength = 1, ErrorMessage = "Número de cedula invalido, favor digitar XXX-XXXXX-X ")]
         public string Identification { get;  set; }
-        [DisplayName("Fecha de Nacimiento")]
-       // [Required(ErrorMessage = "Fecha de Nacimiento es requerida.")]
-        public DateTime DOB { get;  set; }
-        [DisplayName("Pasaporte")]
-        public string Passport { get;  set; }
-        [Display(Name = "Nacionalidad")]
-        public string Nationality { get;  set; }
-        [Display(Name = "Estado Civil")]
-        public CivilStatus MaritalStatus { get;  set; }
+       // [DisplayName("Fecha de Nacimiento")]
+       //[Required(ErrorMessage = "Fecha de Nacimiento es requerida.")]
+       // public DateTime DOB { get;  set; }
+       // [DisplayName("Pasaporte")]
+       // public string Passport { get;  set; }
+       // [Display(Name = "Nacionalidad")]
+       // public string Nationality { get;  set; }
+       // [Display(Name = "Estado Civil")]
+       // public CivilStatus MaritalStatus { get;  set; }
        
-        public string Ocupation { get;  set; }
-        /// <summary>
-        /// Id of the customer. Used to log in, it's checked for uniqueness. 
-        /// </summary>
-        [Display(Name = "Descripción de la situacion")]
-        [DataType(DataType.MultilineText)]
-        [Required(ErrorMessage = "Descripción es requerida.")]
-        public string PasswordHash { get;  set; }
+       // public string Ocupation { get;  set; }
+       // /// <summary>
+       // /// Id of the customer. Used to log in, it's checked for uniqueness. 
+       // /// </summary>
+       // [Display(Name = "Descripción de la situacion")]
+       // [DataType(DataType.MultilineText)]
+       // [Required(ErrorMessage = "Descripción es requerida.")]
+       // public string PasswordHash { get;  set; }
 
         /// <summary>
         /// First name. 
@@ -99,43 +103,44 @@ namespace CreditReport.Data.PersonalInformation
         /// <summary>
         /// Email address
         /// </summary>
-        public string Email { get;  set; }
+        // public string Email { get;  set; }
 
         /// <summary>
         /// Gender: either Male or Female
         /// </summary>
         /// 
-        [Display(Name = "Sexo")]
-        public Gender Gender { get;  set; }
+        //[Display(Name = "Sexo")]
+        //public Gender Gender { get;  set; }
 
-            /// <summary>
-            /// URL of the avatar
-            /// </summary>
-            public string Avatar { get;  set; }
+        /// <summary>
+        /// URL of the avatar
+        /// </summary>
+        //  public string Avatar { get;  set; }
 
         /// <summary>
         /// Postal address of the customer  
         /// At the very minimum, you might want to use an Address object.
         /// </summary>
         ///  [DisplayName("Last Name")]
-        [DisplayName("Direcciones")]
+        //[DisplayName("Direcciones")]
 
-        public ICollection<Address> Addresses { get;  set; }
-        [DisplayName("Empresas relacionadas")]
+        //public ICollection<Address> Addresses { get;  set; }
+        //[DisplayName("Empresas relacionadas")]
 
-        public ICollection<RelateCompany> RelateCompanies { get;  set; }
-        [DisplayName("Consultas")]
+        //public ICollection<RelateCompany> RelateCompanies { get;  set; }
+        //[DisplayName("Consultas")]
 
-        public ICollection<Inquiry> Inquiries { get;  set; }
+        //public ICollection<Inquiry> Inquiries { get;  set; }
+
         [DisplayName("Historial de creditos")]
-
         public ICollection<CreditHistory> CreditHistories { get;  set; }
-        [DisplayName("Personas relacionadas")]
+        
+        //[DisplayName("Personas relacionadas")]
 
-        public ICollection<RelatedPerson> RelatedPersons { get;  set; }
+        //public ICollection<RelatedPerson> RelatedPersons { get;  set; }
          
-        public ICollection<Contact> Contacts { get;  set; }
-        public ICollection<Enrollment> Enrollment { get;  set; }
+        //public ICollection<Contact> Contacts { get;  set; }
+        //public ICollection<Enrollment> Enrollment { get;  set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
@@ -148,33 +153,33 @@ namespace CreditReport.Data.PersonalInformation
         /// </summary>
         /// <param name="address">New address</param>
         /// <returns>this instance</returns>
-        public Person AddAddress(ICollection<Address> addresses)
-            {
+        //public Person AddAddress(ICollection<Address> addresses)
+        //    {
 
-            foreach (var item in addresses)
-            {
-                Addresses.Add(item);
-            }
-            return this;
-        }
-        public Person AddContacts(ICollection<Contact> contacts)
-        {
+        //    foreach (var item in addresses)
+        //    {
+        //        Addresses.Add(item);
+        //    }
+        //    return this;
+        //}
+        //public Person AddContacts(ICollection<Contact> contacts)
+        //{
 
-            foreach (var item in contacts)
-            {
-                Contacts.Add(item);
-            }
-            return this;
-        }
-        public Person AddInquiries(ICollection<Inquiry> inquiries)
-        {
+        //    foreach (var item in contacts)
+        //    {
+        //        Contacts.Add(item);
+        //    }
+        //    return this;
+        //}
+        //public Person AddInquiries(ICollection<Inquiry> inquiries)
+        //{
 
-            foreach (var item in inquiries)
-            {
-                Inquiries.Add(item);
-            }
-            return this;
-        }
+        //    foreach (var item in inquiries)
+        //    {
+        //        Inquiries.Add(item);
+        //    }
+        //    return this;
+        //}
 
         public Person AddCreditHistory(ICollection<CreditHistory> credits)
         {
@@ -189,27 +194,27 @@ namespace CreditReport.Data.PersonalInformation
         }
 
 
-        public Person AddPersons(ICollection<RelatedPerson> Persons)
-        {
-            if (RelatedPersons == null)
-                RelatedPersons = new List<RelatedPerson>();
-            foreach (var item in Persons)
-            {
-                RelatedPersons.Add(item);
-            }
-            return this;
-        }
+        //public Person AddPersons(ICollection<RelatedPerson> Persons)
+        //{
+        //    if (RelatedPersons == null)
+        //        RelatedPersons = new List<RelatedPerson>();
+        //    foreach (var item in Persons)
+        //    {
+        //        RelatedPersons.Add(item);
+        //    }
+        //    return this;
+        //}
 
         /// <summary>
         /// Set the password hash for the customer
         /// </summary>
         /// <param name="hash">Hash of a password to save</param>
         /// <returns>this object</returns>
-        public Person SetPasswordHash(string hash)
-            {
-                PasswordHash = hash;
-                return this;
-            }
+        //public Person SetPasswordHash(string hash)
+        //    {
+        //        PasswordHash = hash;
+        //        return this;
+        //    }
 
             
             /// <summary>
@@ -217,35 +222,35 @@ namespace CreditReport.Data.PersonalInformation
             /// </summary>
             /// <param name="url">URL for the customer picture</param>
             /// <returns>this object</returns>
-            public Person SetAvatar(string url)
-            {
-                Avatar = url;
-                return this;
-            }
+            //public Person SetAvatar(string url)
+            //{
+            //    Avatar = url;
+            //    return this;
+            //}
 
             /// <summary>
             /// Title for the customer (Mr, Mrs, etc)
             /// </summary>
             /// <returns>string</returns>
-            public String GetTitle()
-            {
-                switch (Gender)
-                {
-                    case Gender.Masculino:
-                        return "Mrs";
-                    case Gender.Femenino:
-                        return "Mr.";
-                    default:
-                        return "";
-                }
-            }
+            //public String GetTitle()
+            //{
+            //    switch (Gender)
+            //    {
+            //        case Gender.Masculino:
+            //            return "Mrs";
+            //        case Gender.Femenino:
+            //            return "Mr.";
+            //        default:
+            //            return "";
+            //    }
+            //}
 
             #endregion
 
         public override string ToString()
         {
-            var title = GetTitle();
-            return String.Format("{0} {1} {2}", title, FirstName, LastName);
+          //  var title = GetTitle();
+            return String.Format("{0} {1}", FirstName, LastName);
         }
 
         //#region Identity Management

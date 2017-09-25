@@ -35,11 +35,7 @@
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a>
                     
                 </th>
-               
-                <th>
-                    Gender
-                </th>
-                
+                 
             <th></th>
         </tr>
     </thead>
@@ -55,9 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
+             
              <td>
                 <a asp-action="Edit" asp-route-id="@item.PersonID">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.PersonID">Detalles</a> |

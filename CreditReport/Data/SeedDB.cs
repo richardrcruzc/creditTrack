@@ -190,7 +190,7 @@ namespace CreditReport.Data.PersonalInformation
                          Address.Create("C/JACOBO MAJLUTA","DN","SANTO DOMINGO","55","DOMINICAN REPUBLIC", DateTime.Parse("2001-09-08")),
 
                     };
-                    p.AddAddress(addresses);
+                   // p.AddAddress(addresses);
 
 
                     //var contacts = new Contact[] 
@@ -223,15 +223,14 @@ namespace CreditReport.Data.PersonalInformation
 
                };
 
-                    p.AddInquiries(inqueries);
+                   // p.AddInquiries(inqueries);
 
 
 
                     var credit = new CreditHistory
                     {
 
-                        Company = company,
-                        Note = "Esta persona no quedo bien tomo 1500 pesos hace mas de 6 meses",
+                         Note = "Esta persona no quedo bien tomo 1500 pesos hace mas de 6 meses",
                         CreateDate = DateTime.Now,
                         Person = p,
 
@@ -240,8 +239,7 @@ namespace CreditReport.Data.PersonalInformation
 
                     var credit1 = new CreditHistory
                     {
-                        Company = company,
-                        CreateDate = DateTime.Now.AddYears(-3),
+                         CreateDate = DateTime.Now.AddYears(-3),
 
                         Note = "Credit note for test sample 1",
 
