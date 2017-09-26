@@ -2,6 +2,7 @@
 using CreditReport.Data.PersonalInformation; 
 using CreditReport.Models;
 using CreditReport.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace CreditReport.Controllers
 {
+   
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;

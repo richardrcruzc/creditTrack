@@ -5,6 +5,22 @@ using System.Threading.Tasks;
 
 namespace CreditReport.Data.PersonalInformation
 {
+    public enum ProvinceType
+    {
+        DistritoNacional = 1,
+        Provincia =2,
+        Municipio = 3,
+        DistritoMunicipal = 4
+
+    }
+
+    public enum QuestionStatus
+    {
+        Publica,
+        Inactiva,
+        
+    }
+
     public enum ModalSize
     {
         Small,

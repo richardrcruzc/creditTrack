@@ -10,16 +10,29 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-
+ 
 <div class="container">
-    <div class="jumbotron">
+  
+
+
+    @*<div class="jumbotron">
         <div class="container">
+
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <a type="button" class="btn btn-default btn-lg" href="/People/query">
+                        <span class="thumbnail glyphicon glyphicon-user" aria-hidden="true"></span>
+                        Consultar Historial Crediticio Personas
+                    </a>
+                </div>
+
+
+            </div>
             <p>
                 <h2> Opciones</h2>
             </p>
             <p>
-                @*<a class="btn btn-primary" href="/Companies">Consultar Empresas</a>*@
-                <a class="btn btn-primary" href="/People/query">Consultar Historial Crediticio Personas</a>
+                 <a class="btn btn-primary" href="/People/query">Consultar Historial Crediticio Personas</a>
                 <a class="btn btn-primary" href="/People/agregar">Registrar historial Personas</a>
                 <a class="btn btn-primary" href="/People/query">Perfil en rede sociales</a>
                 <a class="btn btn-primary" href="/People">Consultar Registro policial</a>
@@ -29,8 +42,61 @@
             <p>
                 <a class="btn btn-primary" href="/People">Preguntar sobre una personas</a>
             </p>
+
+            <button type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+            </button> 
+                    <a type="button" class="btn btn-default btn-lg" href="/People/query">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        Consultar Historial Crediticio Personas 
+                    </a>
+ 
+            
+            <button type="button" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Registrar historial Personas
+            </button>
         </div>
+    </div>*@
+
+    
+
+    <div class="container">
+  <h2>Opciones</h2>
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Actualmente disponibles</div>
+      <div class="panel-body">
+          <a type="button" class="btn btn-default btn-lg" href="/People/query">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              Consultar Historial Crediticio Personas
+          </a>
+          <a type="button" class="btn btn-default btn-lg" href="/People/agregar">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              Registrar historial Personas
+          </a>
+
+          <a type="button" class="btn btn-default btn-lg" href="/preguntas">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              Preguntar sobre una personas
+          </a>
+      </div>
     </div>
+
+    
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Proximamente</div>
+      <div class="panel-body">
+
+          <a class="btn btn-primary" href="/People/query">Perfil en rede sociales</a>
+          <a class="btn btn-primary" href="/People">Consultar Registro policial</a>
+
+      </div>
+    </div>
+ 
+  </div>
+</div>
+
 </div>
 
 }

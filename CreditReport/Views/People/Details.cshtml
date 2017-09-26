@@ -6,74 +6,72 @@
 
 
 }
+<div class="container">
+    <h2>Consultar Historial Crediticio Persona</h2>
 
-<h2>Detalles</h2>
+    <div class="panel-group">
+        <div class="panel panel-primary">
 
-<div>
-    <h4>Consultar Historial Crediticio Persona</h4>
-    
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Identification)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Identification)
-        </dd>
-       
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-        
-        <dt>
+            <div class="panel-heading">Datos Personales</div>
 
-        <dt>
-            <br />
-        </dt>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreditHistories)
-            
-        </dt>
-        <dd>
-            <table class="table">
-                <tr>
-                    <th colspan="5">
-                        <div>
-                            <a asp-controller="CreditHistories" asp-action="Create" asp-route-id="@Model.PersonID">Agregar historial</a>  
-                           
-                        </div>
-                    </th>
-                </tr>
-                <tr>
-                     <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th> 
-                    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
-                    
-                </tr>
-                @foreach (var item in Model.CreditHistories)
-                {
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Identification)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Identification)
+                </dd>
 
+                <dt>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+
+                
+            </dl>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">@Html.DisplayNameFor(model => model.CreditHistories)</div>
+            <div class="panel-body">
+
+                <table class="table">
                     <tr>
-                         <td>
-                            @Html.DisplayFor(modelItem => item.Note)
-                        </td>
-                        
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreateDate)
-                           
-                        </td>
-                      
- 
+                        <th colspan="5">
+                            <div class="btn-group">
+                                <a asp-controller="People" asp-action="AgregarHistorial" class="btn btn-primary" asp-route-id="@Model.PersonID">
+                                    <i class="glyphicon glyphicon-plus"></i>  Agregar historial
+                                </a>
+                             
+                            </div>
+                        </th>
                     </tr>
-                }
-            </table>
-        </dd>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th>
+                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
+
+                    </tr>
+                    @foreach (var item in Model.CreditHistories)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateDate)
+
+                            </td>
 
 
-         
-        
-    </dl>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
 </div>
- 
+

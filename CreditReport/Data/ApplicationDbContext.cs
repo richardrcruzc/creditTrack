@@ -26,6 +26,9 @@ namespace CreditReport.Data
             modelBuilder.Entity<Person>().ToTable("Person");
             modelBuilder.Entity<Company>().ToTable("Company");
             modelBuilder.Entity<RelateCompany>().ToTable("RelateCompany");
+            modelBuilder.Entity<Question>().ToTable("Question");
+
+            modelBuilder.Entity<Province>().ToTable("Province");
 
             //modelBuilder.Entity<RelatedPerson>()
             // .ToTable("RelatedPerson");
@@ -34,16 +37,16 @@ namespace CreditReport.Data
             //  .ToTable("RelatedPerson")
             //   .HasKey(k => new { k.PersonID, k.RelatedID });
 
-           // modelBuilder.Entity<RelatedPerson>()
-           // .HasOne(p => p.PersonRelated)
-           //.WithMany()
-           // .HasForeignKey(p => p.PersonRelatedID);
+            // modelBuilder.Entity<RelatedPerson>()
+            // .HasOne(p => p.PersonRelated)
+            //.WithMany()
+            // .HasForeignKey(p => p.PersonRelatedID);
 
-           // modelBuilder.Entity<RelatedPerson>()
-           // .HasOne(p => p.PersonPrincipal)
+            // modelBuilder.Entity<RelatedPerson>()
+            // .HasOne(p => p.PersonPrincipal)
 
-           //  .WithMany(b => b.RelatedPersons)
-           // .HasForeignKey(p => p.PersonPrincipalID);
+            //  .WithMany(b => b.RelatedPersons)
+            // .HasForeignKey(p => p.PersonPrincipalID);
 
         }
 
@@ -54,6 +57,10 @@ namespace CreditReport.Data
         public DbSet<Contact> Contacts { get; set; }
 
         public DbSet<CreditHistory> CreditHistory { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+
+
 
     }
 }

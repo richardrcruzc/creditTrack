@@ -9,9 +9,10 @@ using CreditReport.Data.PersonalInformation;
 namespace CreditReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170925224625_pp")]
+    partial class pp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -116,30 +117,6 @@ namespace CreditReport.Migrations
                     b.HasKey("PersonID");
 
                     b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Question", b =>
-                {
-                    b.Property<int>("QuestionID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<int?>("MotherQuestionQuestionID");
-
-                    b.Property<int>("Status");
-
-                    b.HasKey("QuestionID");
-
-                    b.HasIndex("MotherQuestionQuestionID");
-
-                    b.ToTable("Question");
                 });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.RelateCompany", b =>
@@ -338,13 +315,6 @@ namespace CreditReport.Migrations
                     b.HasOne("CreditReport.Data.PersonalInformation.Person", "Person")
                         .WithMany("CreditHistories")
                         .HasForeignKey("PersonID");
-                });
-
-            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Question", b =>
-                {
-                    b.HasOne("CreditReport.Data.PersonalInformation.Question", "MotherQuestion")
-                        .WithMany("ChildrenQuestion")
-                        .HasForeignKey("MotherQuestionQuestionID");
                 });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.RelateCompany", b =>

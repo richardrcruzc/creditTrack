@@ -9,9 +9,10 @@ using CreditReport.Data.PersonalInformation;
 namespace CreditReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170926011451_QuestionAdded")]
+    partial class QuestionAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -127,17 +128,11 @@ namespace CreditReport.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<int?>("MotherQuestionQuestionID");
+                    b.Property<string>("Description");
 
                     b.Property<int>("Status");
 
                     b.HasKey("QuestionID");
-
-                    b.HasIndex("MotherQuestionQuestionID");
 
                     b.ToTable("Question");
                 });
@@ -338,13 +333,6 @@ namespace CreditReport.Migrations
                     b.HasOne("CreditReport.Data.PersonalInformation.Person", "Person")
                         .WithMany("CreditHistories")
                         .HasForeignKey("PersonID");
-                });
-
-            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Question", b =>
-                {
-                    b.HasOne("CreditReport.Data.PersonalInformation.Question", "MotherQuestion")
-                        .WithMany("ChildrenQuestion")
-                        .HasForeignKey("MotherQuestionQuestionID");
                 });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.RelateCompany", b =>

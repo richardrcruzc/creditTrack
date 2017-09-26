@@ -63,7 +63,7 @@ namespace CreditReport.Controllers
         }
 
         // GET: People
-        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, string searchId, int? page)
+         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, string searchId, int? page)
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
@@ -118,7 +118,7 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Details/5
-        public async Task<IActionResult> Details(int? id)
+         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -138,6 +138,7 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Create
+
         public IActionResult Agregar()
         {
             return View();
@@ -190,7 +191,65 @@ namespace CreditReport.Controllers
         }
 
 
+        // GET: People/Create
+        public IActionResult AgregarHistorial(int id)
+        {
+            var persona = _context.Persons.Where(x => x.PersonID == id).FirstOrDefault();
+            if (persona == null)
+                return null;
 
+            var ch = new AddCreditHistory { PersonID = persona.PersonID, FirstName=persona.FirstName, LastName= persona.LastName, Identification = persona.Identification };
+
+            return View(ch);
+        }
+
+        // POST: People/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AgregarHistorial(AddCreditHistory c)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = _userManager.GetUserName(User);
+                    var persona = _context.Persons.Where(x => x.PersonID == c.PersonID).FirstOrDefault();
+                    if(persona==null)
+                        return View(c);
+
+                    var credit = new CreditHistory { Person = persona, CreateDate = DateTime.Now, Note = c.Description, CreateBy= user };
+
+                    var credits = new List<CreditHistory>();
+                    credits.Add(credit); 
+
+                    persona.AddCreditHistory(credits);
+
+                    _context.Update(persona);
+
+                    await _context.SaveChangesAsync();
+
+                    ModelState.AddModelError("", "El historial hasido creado.");
+                    //return RedirectToAction("Index");
+
+                    c.FirstName = persona.FirstName;
+                    c.LastName = persona.LastName;
+                    c.PersonID = persona.PersonID;
+                    c.Identification = persona.Identification;
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", ex.Message + " Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+            }
+            return View(c);
+        }
+
+       
         // GET: People/Create
         public IActionResult Create()
         {
@@ -202,6 +261,7 @@ namespace CreditReport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Create(Person person)
         {
             try
@@ -224,6 +284,7 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Edit/5
+       
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -245,6 +306,7 @@ namespace CreditReport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> Edit(int id, [Bind("PersonID,Identification,PasswordHash,FirstName,LastName,Email,Gender,Avatar")] Person person)
         {
             if (id != person.PersonID)
@@ -276,12 +338,13 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        
+        public async Task<IActionResult> Delete(int? id )
         {
             if (id == null)
             {
                 return NotFound();
-            }
+            } 
 
             var person = await _context.Persons
                  .AsNoTracking()
@@ -297,12 +360,23 @@ namespace CreditReport.Controllers
         // POST: People/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        
+        public async Task<IActionResult> DeleteConfirmed(Person p)
         {
-            var person = await _context.Persons.SingleOrDefaultAsync(m => m.PersonID == id);
-            _context.Persons.Remove(person);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            var person = await _context.Persons.SingleOrDefaultAsync(m => m.PersonID == p.PersonID);
+
+            try
+            {
+                _context.Persons.Remove(person);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("",  ex.Message);
+                return View(person);
+            }
+           
         }
 
         private bool PersonExists(int id)

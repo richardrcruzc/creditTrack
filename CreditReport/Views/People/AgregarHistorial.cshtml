@@ -1,0 +1,80 @@
+﻿@model CreditReport.Models.People.AddCreditHistory
+
+@{
+    ViewData["Title"] = "Details";
+
+
+
+}
+
+<div class="container">
+    <h2>Consultar Historial Crediticio Persona</h2>
+    <div class="panel-group">
+        <form asp-action="AgregarHistorial">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">Agregar Historial de Créditos</div>
+                <div class="panel-body">
+
+                    <input type="hidden" asp-for="PersonID" />
+
+
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Identification)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Identification)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.FullName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.FullName)
+                        </dd>
+
+
+
+
+
+
+                    </dl>
+
+
+
+
+                </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Favor Digitar las informaciones del crédito</div>
+                <div class="panel-body">
+
+                    @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Any()))
+                    {
+                        <div class="alert alert-danger">
+                            <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                    }
+
+
+                    <textarea asp-for="Description" rows="5" cols="40" placeholder="Favor describir la situacion lo mas detallada posible, especificando el monto y la fecha"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Crear" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+ 
+
+
