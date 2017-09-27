@@ -17,6 +17,19 @@ namespace CreditReport.Models.AccountViewModels
         [DataType(DataType.Text)]
         public string Empresa { get; set; }
 
+         [DataType(DataType.Text)]
+        public string Calle { get; set; }
+         [DataType(DataType.Text)]
+        public string Barrio { get; set; }
+         [DataType(DataType.Text)]
+        public string Sector { get; set; }
+         [DataType(DataType.Text)]
+        public string Municipio { get; set; }
+         [DataType(DataType.Text)]
+        public string Provincia { get; set; }
+
+
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

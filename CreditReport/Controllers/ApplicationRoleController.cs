@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CreditReport.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrators")]
     public class ApplicationRoleController : Controller
     {
         private readonly RoleManager<ApplicationRole> roleManager;

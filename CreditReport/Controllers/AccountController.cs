@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using CreditReport.Models;
 using CreditReport.Models.AccountViewModels;
 using CreditReport.Services;
+using CreditReport.Authorization;
 
 namespace CreditReport.Controllers
 {
@@ -112,10 +113,22 @@ namespace CreditReport.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Empresa=model.Empresa, Name=model.Name};
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Empresa =model.Empresa,
+                    Name =model.Name,
+                     Calle =model.Calle,
+                     Barrio=model.Barrio,
+                      Sector =model.Sector,
+                      Municipio=model.Municipio,
+                      Provincia=model.Provincia,
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                      await _userManager.AddToRoleAsync(user, Constants.CustomersRole);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -5,7 +5,7 @@ using CreditReport.Data.PersonalInformation;
 
 namespace CreditReport.Authorization
 {
-    public class ContactAdministratorsAuthorizationHandler
+    public class AdministratorsAuthorizationHandler
                    : AuthorizationHandler<OperationAuthorizationRequirement, Contact>
     {
         protected override Task HandleRequirementAsync(
@@ -19,7 +19,7 @@ namespace CreditReport.Authorization
             }
 
             // Administrators can do anything.
-            if (context.User.IsInRole(Constants.ContactAdministratorsRole))
+            if (context.User.IsInRole(Constants.AdministratorsRole))
             {
                 context.Succeed(requirement);
             }

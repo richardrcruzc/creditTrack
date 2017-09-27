@@ -1,4 +1,5 @@
-﻿using CreditReport.Data;
+﻿using CreditReport.Authorization;
+using CreditReport.Data;
 using CreditReport.Data.PersonalInformation; 
 using CreditReport.Models;
 using CreditReport.Models.Users;
@@ -14,16 +15,19 @@ using System.Threading.Tasks;
 
 namespace CreditReport.Controllers
 {
-   
+   [Authorize(Roles = "Administrators")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly ApplicationDbContext _context;
 
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public UserController(ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -33,6 +37,7 @@ namespace CreditReport.Controllers
             model = userManager.Users.Select(u => new UserListViewModel
             {
                 Id = u.Id,
+                Empresa=u.Empresa,
                 Name = u.Name,
                 Email = u.Email
             }).ToList();
@@ -89,11 +94,25 @@ namespace CreditReport.Controllers
                 Value = r.Id
             }).ToList();
 
+            model.Provincias = _context.Provinces
+                .Where(p=>p.MotherProvince == null)
+                .OrderBy(n=>n.Name)
+                .Select(p=> new SelectListItem { Text = p.Name, Value=p.Name }).ToList();
+
+            if (!string.IsNullOrEmpty(model.Provincia))
+            {
+                model.Municipios = _context.Provinces
+                  .Where(p => p.MotherProvince.Name == model.Provincia)
+                  .OrderBy(n => n.Name)
+                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+            }
+
             if (!String.IsNullOrEmpty(id))
             {
                 ApplicationUser user = await userManager.FindByIdAsync(id);
                 if (user != null)
                 {
+                    model.Empresa = user.Empresa;
                     model.Name = user.Name;
                     model.Email = user.Email;
                     model.ApplicationRoleId = roleManager.Roles.Single(r => r.Name == userManager.GetRolesAsync(user).Result.Single()).Id;
@@ -136,7 +155,32 @@ namespace CreditReport.Controllers
                     }
                 }
             }
+            model.Provincias = _context.Provinces
+                .Where(p => p.MotherProvince == null)
+                .OrderBy(n => n.Name)
+                .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+
+            if (!string.IsNullOrEmpty(model.Provincia))
+            {
+                model.Municipios = _context.Provinces
+                  .Where(p => p.MotherProvince.Name == model.Provincia)
+                  .OrderBy(n => n.Name)
+                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+            }
             return PartialView("_EditUser", model);
+        }
+        [HttpPost]
+        public JsonResult AjaxMethod(string value)
+        {
+            var provincia = _context.Provinces.Where(n => n.Name == value).FirstOrDefault();
+
+
+            var municipios = _context.Provinces 
+                .Where(p => p.MotherProvince == provincia)
+                .OrderBy(n => n.Name)
+                .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+
+            return Json(municipios);
         }
 
         [HttpGet]

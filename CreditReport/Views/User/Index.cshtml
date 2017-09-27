@@ -14,7 +14,9 @@
         <table class="table table-bordered table-striped table-condensed">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Nombre Empres </th>
+
+                    <th>Nombres y Apellidos</th>
                     <th>Email</th>
                     <th>Action</th>
                 </tr>
@@ -23,6 +25,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>@item.Empresa</td>
                         <td>@item.Name</td>
                         <td>@item.Email</td>
                         <td>
@@ -43,7 +46,8 @@
 
 @Html.Partial("_Modal", new BootstrapModel { ID = "modal-action-user", AreaLabeledId = "modal-action-user-label", Size = CreditReport.Data.PersonalInformation.ModalSize.Medium })
 
-@section scripts
+
+@*@section scripts
     {
     <script src="~/js/user-index.js" asp-append-version="true"></script>
-}
+}*@

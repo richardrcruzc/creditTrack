@@ -63,7 +63,8 @@ namespace CreditReport.Controllers
         }
 
         // GET: People
-         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, string searchId, int? page)
+        [Authorize(Roles = "Administrators")]
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, string searchId, int? page)
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
@@ -118,7 +119,8 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Details/5
-         public async Task<IActionResult> Details(int? id)
+        [Authorize(Roles = "Administrators")]
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -249,8 +251,9 @@ namespace CreditReport.Controllers
             return View(c);
         }
 
-       
+
         // GET: People/Create
+        [Authorize(Roles = "Administrators")]
         public IActionResult Create()
         {
             return View();
@@ -261,7 +264,8 @@ namespace CreditReport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
+        [Authorize(Roles = "Administrators")]
+
         public async Task<IActionResult> Create(Person person)
         {
             try
@@ -284,7 +288,8 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Edit/5
-       
+        [Authorize(Roles = "Administrators")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -306,7 +311,8 @@ namespace CreditReport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       
+        [Authorize(Roles = "Administrators")]
+
         public async Task<IActionResult> Edit(int id, [Bind("PersonID,Identification,PasswordHash,FirstName,LastName,Email,Gender,Avatar")] Person person)
         {
             if (id != person.PersonID)
@@ -338,7 +344,8 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Delete/5
-        
+        [Authorize(Roles = "Administrators")]
+
         public async Task<IActionResult> Delete(int? id )
         {
             if (id == null)
@@ -360,7 +367,8 @@ namespace CreditReport.Controllers
         // POST: People/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        
+        [Authorize(Roles = "Administrators")]
+
         public async Task<IActionResult> DeleteConfirmed(Person p)
         {
             var person = await _context.Persons.SingleOrDefaultAsync(m => m.PersonID == p.PersonID);

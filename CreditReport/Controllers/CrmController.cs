@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CreditReport.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class CrmController : Controller
     { 
 

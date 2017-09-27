@@ -1,0 +1,40 @@
+@using Microsoft.AspNetCore.Identity
+@using CreditReport.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+var isInRole =false;
+  if (SignInManager.IsSignedIn(User))
+{
+var cu =await UserManager.GetUserAsync(User);
+  isInRole =await UserManager.IsInRoleAsync(cu,"Administrators");
+}
+}
+<ul class="nav navbar-nav">
+
+        @if (SignInManager.IsSignedIn(User))
+{
+
+    <li><a asp-area="" asp-controller="People" asp-action="query">Consultar Personas</a></li>
+<li><a asp-area="" asp-controller="People" asp-action="agregar">Registrar Personas</a></li>
+<li><a asp-area="" asp-controller="preguntas" asp-action="index">Preguntas </a></li>
+
+
+    if(isInRole==true)
+    {
+            <li><a asp-area="" asp-controller="People" asp-action="index">Personas</a></li>
+            <li><a asp-area="" asp-controller="ApplicationRole" asp-action="Index">Role</a></li>
+            <li><a asp-area="" asp-controller="User" asp-action="Index">User</a></li>
+            }
+
+}
+else
+{
+
+ }
+<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+</ul>

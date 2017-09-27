@@ -29,11 +29,17 @@ namespace CreditReport.Data.PersonalInformation
                 // The admin user can do anything
 
                 var adminID = await EnsureUser(serviceProvider, testUserPw, "admin@contoso.com");
-                await EnsureRole(serviceProvider, adminID, Constants.ContactAdministratorsRole);
+                await EnsureRole(serviceProvider, adminID, Constants.AdministratorsRole);
 
                 // allowed user can create and edit contacts that they create
                 var uid = await EnsureUser(serviceProvider, testUserPw, "manager@contoso.com");
-                await EnsureRole(serviceProvider, uid, Constants.ContactManagersRole);
+                await EnsureRole(serviceProvider, uid, Constants.ManagersRole);
+
+                 // allowed user can create and edit contacts that they create
+                var customer = await EnsureUser(serviceProvider, testUserPw, "customer@contoso.com");
+                await EnsureRole(serviceProvider, uid, Constants.CustomersRole);
+
+
 
                 SeedDB(context, adminID);
             }
@@ -50,7 +56,18 @@ namespace CreditReport.Data.PersonalInformation
             var user = await userManager.FindByNameAsync(UserName);
             if (user == null)
             {
-                user = new ApplicationUser { UserName = UserName };
+                user = new ApplicationUser
+                {
+                    Email = UserName,
+                    UserName = UserName,
+                     Calle="Calle 1ra",
+                     Sector="El Tamarindo",
+                      Barrio="La Mata",
+                    Municipio = "Puerto Plata",
+                    Provincia = "Puerto Plata",
+                    Empresa ="Colmado el que se ve de lejos",
+                      
+                };
                 await userManager.CreateAsync(user, testUserPw);
             }
 
@@ -61,11 +78,15 @@ namespace CreditReport.Data.PersonalInformation
                                                                       string uid, string role)
         {
             IdentityResult IR = null;
-            var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
+            var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+           
+            //RoleManager<IdentityRole> roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
 
             if (!await roleManager.RoleExistsAsync(role))
             {
-                IR = await roleManager.CreateAsync(new IdentityRole(role));
+                IR = await roleManager.CreateAsync(new ApplicationRole {Name =role, Description = role });
             }
 
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
@@ -388,8 +409,7 @@ namespace CreditReport.Data.PersonalInformation
                     ProvinceType = ProvinceType.DistritoMunicipal,
                 });
                 context.Provinces.Add(ep);
-
-
+                 
 
                var es =  new Province
                     {
@@ -418,147 +438,706 @@ namespace CreditReport.Data.PersonalInformation
                 });
                 context.Provinces.Add(ep);
 
-                http://mipais.jmarcano.com/geografia/province/municipios/index.html
-                new Province
+
+                var ha = new Province
                     {
                         Name = "Hato Mayor",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+
+                ha.AddChildren(new Province
+                {
+                    Name = "Hato Mayor del Rey",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                ha.AddChildren(new Province
+                {
+                    Name = "El Valle",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                ha.AddChildren(new Province
+                {
+                    Name = "Sabana de la Mar",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                
+                context.Provinces.Add(ha);
+
+                var he = new Province
                     {
                         Name = "Hermanas Mirabal",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                he.AddChildren(new Province
+                {
+                    Name = "Salcedo",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                he.AddChildren(new Province
+                {
+                    Name = "Tenares",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                he.AddChildren(new Province
+                {
+                    Name = "Villa Tapia",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(he);
+
+
+             var ind = new Province
                     {
                         Name = "Independencia",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                ind.AddChildren(new Province
+                {
+                    Name = "Jimaní",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                ind.AddChildren(new Province
+                {
+                    Name = "Cristóbal",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                ind.AddChildren(new Province
+                {
+                    Name = "Duvergé",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                ind.AddChildren(new Province
+                {
+                    Name = "La Descubierta",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                ind.AddChildren(new Province
+                {
+                    Name = "Mella",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                ind.AddChildren(new Province
+                {
+                    Name = "Postrer Río",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                 
+                context.Provinces.Add(ind);
+
+                var la = new Province
                     {
                         Name = "La Altagracia",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                la.AddChildren(new Province
+                {
+                    Name = "Higüey",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                la.AddChildren(new Province
+                {
+                    Name = "San Rafael del Yuma",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                
+                context.Provinces.Add(la);
+
+
+               var lr =  new Province
                     {
                         Name = "La Romana",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                lr.AddChildren(new Province
+                {
+                    Name = "La Romana",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                lr.AddChildren(new Province
+                {
+                    Name = "Guaymate",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                lr.AddChildren(new Province
+                {
+                    Name = "Villa Hermosa",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                 
+                context.Provinces.Add(lr);
+
+               var lv =  new Province
                     {
                         Name = "La Vega",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                lv.AddChildren(new Province
+                {
+                    Name = "La Concepción de La Vega",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                lv.AddChildren(new Province
+                {
+                    Name = "Constanza",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                lv.AddChildren(new Province
+                {
+                    Name = "Jarabacoa",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                lv.AddChildren(new Province
+                {
+                    Name = "Jima Abajo",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                 context.Provinces.Add(lv);
+
+
+                 
+               var mt =  new Province
                     {
                         Name = "María Trinidad Sánchez",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                mt.AddChildren(new Province
+                {
+                    Name = "Nagua",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mt.AddChildren(new Province
+                {
+                    Name = "Cabrera",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mt.AddChildren(new Province
+                {
+                    Name = "El Factor",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mt.AddChildren(new Province
+                {
+                    Name = "Río San Juan",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(mt);
+                  
+                var mo = new Province
                     {
                         Name = "Monseñor Nouel",
                         ProvinceType = ProvinceType.Provincia,
+                    };
+                mo.AddChildren(new Province
+                {
+                    Name = "Bonao",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mo.AddChildren(new Province
+                {
+                    Name = "Maimón",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mo.AddChildren(new Province
+                {
+                    Name = "Piedra Blanca",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(mo);
 
-                    });
-           
-                new Province
+
+                var mot = new Province
                     {
                         Name = "Montecristi",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+
+                mot.AddChildren(new Province
+                {
+                    Name = "Montecristi",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mot.AddChildren(new Province
+                {
+                    Name = "Castañuela",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mot.AddChildren(new Province
+                {
+                    Name = "Guayubín",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mot.AddChildren(new Province
+                {
+                    Name = "Las Matas de Santa Cruz",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mot.AddChildren(new Province
+                {
+                    Name = "Pepillo Salcedo",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mot.AddChildren(new Province
+                {
+                    Name = "Villa Vásquez	",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(mot);
+
+
+
+                var mp = new Province
                     {
                         Name = "Monte Plata",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                mp.AddChildren(new Province
+                {
+                    Name = "Monte Plata",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mp.AddChildren(new Province
+                {
+                    Name = "Bayaguana",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mp.AddChildren(new Province
+                {
+                    Name = "Peralvillo",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mp.AddChildren(new Province
+                {
+                    Name = "Sabana Grande de Boyá",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mp.AddChildren(new Province
+                {
+                    Name = "Yamasá",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(mp);
+
+                
+                var pe = new Province
                     {
                         Name = "Pedernales",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                pe.AddChildren(new Province
+                {
+                    Name = "Pedernales",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pe.AddChildren(new Province
+                {
+                    Name = "Oviedo",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+
+                context.Provinces.Add(pe);
+
+                var per = new Province
+                {
+                    Name = "Peravia",
+                    ProvinceType = ProvinceType.Provincia,
+                };
+                per.AddChildren(new Province
+                {
+                    Name = "Baní",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                per.AddChildren(new Province
+                {
+                    Name = "Nizao",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                 context.Provinces.Add(per);
+                 
+
+                var pp =  new Province
                     {
                         Name = "Puerto Plata",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                pp.AddChildren(new Province
+                {
+                    Name = "Puerto Plata",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pp.AddChildren(new Province
+                {
+                    Name = "Altamira",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pp.AddChildren(new Province
+                {
+                    Name = "Guananico",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pp.AddChildren(new Province
+                {
+                    Name = "Imbert",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pp.AddChildren(new Province
+                {
+                    Name = "Los Hidalgos",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pp.AddChildren(new Province
+                {
+                    Name = "Sosúa",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pp.AddChildren(new Province
+                {
+                    Name = "Villa Isabela",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                pp.AddChildren(new Province
+                {
+                    Name = "Villa Montellano",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(pp);
+
+                 
+               var sa= new Province
                     {
                         Name = "Samaná",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
-                    {
-                        Name = "",
-                        ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sa.AddChildren(new Province
+                {
+                    Name = "Samaná",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sa.AddChildren(new Province
+                {
+                    Name = "Las Terrenas",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sa.AddChildren(new Province
+                {
+                    Name = "Sánchez",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sa);
+            
+            var san=    new Province
                     {
                         Name = "San Cristóbal",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                san.AddChildren(new Province
+                {
+                    Name = "San Cristóbal",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                san.AddChildren(new Province
+                {
+                    Name = "Bajos de Haina",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                san.AddChildren(new Province
+                {
+                    Name = "Cambita Garabito",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                san.AddChildren(new Province
+                {
+                    Name = "Los Cacaos",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                san.AddChildren(new Province
+                {
+                    Name = "Sabana Grande de Palenque",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                san.AddChildren(new Province
+                {
+                    Name = "San Gregorio de Nigua",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                san.AddChildren(new Province
+                {
+                    Name = "Villa Altagracia",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                san.AddChildren(new Province
+                {
+                    Name = "Yaguate",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(san);
+
+
+               var sj=  new Province
                     {
                         Name = "San José de Ocoa",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sj.AddChildren(new Province
+                {
+                    Name = "San José de Ocoa",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sj.AddChildren(new Province
+                {
+                    Name = "Rancho Arriba",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sj.AddChildren(new Province
+                {
+                    Name = "Sabana Larga",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sj);
+
+                var sanj = new Province
                     {
                         Name = "San Juan",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sanj.AddChildren(new Province
+                {
+                    Name = "San Juan de la Maguana",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sanj.AddChildren(new Province
+                {
+                    Name = "Bohechío",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sanj.AddChildren(new Province
+                {
+                    Name = "El Cercado",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sanj.AddChildren(new Province
+                {
+                    Name = "Las Matas de Farfán",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sanj.AddChildren(new Province
+                {
+                    Name = "Vallejuelo",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sanj.AddChildren(new Province
+                {
+                    Name = "Sabana Larga",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sanj);
+
+                var sp = new Province
                     {
                         Name = "San Pedro de Macorís",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sp.AddChildren(new Province
+                {
+                    Name = "San Pedro de Macorís",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Consuelo",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Guayacanes",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Quisqueya",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Ramón Santana",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "San José de Los Llanos",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sp);
+
+
+                var sar = new Province
                     {
                         Name = "Sánchez Ramírez",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sp.AddChildren(new Province
+                {
+                    Name = "Cotuí",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Cevicos",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Fantino",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "La Mata",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sp);
+
+
+                var snt = new Province
                     {
                         Name = "Santiago",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sp.AddChildren(new Province
+                {
+                    Name = "Santiago",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Bisonó",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Jánico",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Licey al Medio",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Puñal",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Sabana Iglesia",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "San José de las Matas",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Tamboril",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sp.AddChildren(new Province
+                {
+                    Name = "Villa González",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sp);
+
+
+              var sanr=  new Province
                     {
                         Name = "Santiago Rodríguez",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sanr.AddChildren(new Province
+                {
+                    Name = "San Ignacio de Sabaneta",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sanr.AddChildren(new Province
+                {
+                    Name = "Los Almácigos",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sanr.AddChildren(new Province
+                {
+                    Name = "Monción",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sanr);
+                 
+                var sdg = new Province
                     {
                         Name = "Santo Domingo",
                         ProvinceType = ProvinceType.Provincia,
-                    });
-           
-                new Province
+                    };
+                sdg.AddChildren(new Province
+                {
+                    Name = "Santo Domingo Este",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sdg.AddChildren(new Province
+                {
+                    Name = "Boca Chica",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sdg.AddChildren(new Province
+                {
+                    Name = "Los Alcarrizos",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sdg.AddChildren(new Province
+                {
+                    Name = "Pedro Brand",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sdg.AddChildren(new Province
+                {
+                    Name = "San Antonio de Guerra",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sdg.AddChildren(new Province
+                {
+                    Name = "Santo Domingo Norte",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                sdg.AddChildren(new Province
+                {
+                    Name = "Santo Domingo Oeste",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(sdg);
+
+
+                var mao = new Province
                     {
                         Name = "Valverde",
                         ProvinceType = ProvinceType.Provincia,
 
-                    });
-            
+                    };
+                mao.AddChildren(new Province
+                {
+                    Name = "Mao",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mao.AddChildren(new Province
+                {
+                    Name = "Esperanza",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                mao.AddChildren(new Province
+                {
+                    Name = "Laguna Salada",
+                    ProvinceType = ProvinceType.DistritoMunicipal,
+                });
+                context.Provinces.Add(mao);
+
 
             }
 

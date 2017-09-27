@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CreditReport.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrators")]
     public class CompaniesController : Controller
     {
         private readonly ApplicationDbContext _context;

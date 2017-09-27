@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 namespace CreditReport.Controllers
 {
     #region snippet_ContactsControllerCtor
+    [Authorize(Roles = "Administrators")]
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -37,8 +38,8 @@ namespace CreditReport.Controllers
             var contacts = from c in _context.Contacts
                            select c;
 
-            var isAuthorized = User.IsInRole(Constants.ContactManagersRole) ||
-                               User.IsInRole(Constants.ContactAdministratorsRole);
+            var isAuthorized = User.IsInRole(Constants.ManagersRole) ||
+                               User.IsInRole(Constants.AdministratorsRole);
 
             var currentUserId = _userManager.GetUserId(User);
 
@@ -69,11 +70,11 @@ namespace CreditReport.Controllers
 
             var isAuthorizedRead = await _authorizationService.AuthorizeAsync(
                                                        User, contact,
-                                                       ContactOperations.Read);
+                                                       Operations.Read);
 
             var isAuthorizedApprove = await _authorizationService.AuthorizeAsync(
                                            User, contact,
-                                           ContactOperations.Approve);
+                                           Operations.Approve);
 
             if (contact.Status != ContactStatus.Approved &&   // Not approved.
                                   !isAuthorizedRead &&        // Don't own it.
@@ -118,7 +119,7 @@ namespace CreditReport.Controllers
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(
                                                         User, contact,
-                                                        ContactOperations.Create);
+                                                        Operations.Create);
             if (!isAuthorized)
             {
                 return new ChallengeResult();
@@ -148,7 +149,7 @@ namespace CreditReport.Controllers
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(
                                                         User, contact,
-                                                        ContactOperations.Update);
+                                                        Operations.Update);
             if (!isAuthorized)
             {
                 return new ChallengeResult();
@@ -177,7 +178,7 @@ namespace CreditReport.Controllers
             }
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
-                                                                ContactOperations.Update);
+                                                                Operations.Update);
             if (!isAuthorized)
             {
                 return new ChallengeResult();
@@ -190,7 +191,7 @@ namespace CreditReport.Controllers
                 // If the contact is updated after approval, 
                 // and the user cannot approve set the status back to submitted
                 var canApprove = await _authorizationService.AuthorizeAsync(User, contact,
-                                        ContactOperations.Approve);
+                                        Operations.Approve);
 
                 if (!canApprove) contact.Status = ContactStatus.Submitted;
             }
@@ -218,7 +219,7 @@ namespace CreditReport.Controllers
             }
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
-                                        ContactOperations.Delete);
+                                        Operations.Delete);
             if (!isAuthorized)
             {
                 return new ChallengeResult();
@@ -235,7 +236,7 @@ namespace CreditReport.Controllers
             var contact = await _context.Contacts.SingleOrDefaultAsync(m => m.ContactId == id);
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
-                                        ContactOperations.Delete);
+                                        Operations.Delete);
             if (!isAuthorized)
             {
                 return new ChallengeResult();
@@ -254,8 +255,8 @@ namespace CreditReport.Controllers
         {
             var contact = await _context.Contacts.SingleOrDefaultAsync(m => m.ContactId == id);
 
-            var contactOperation = (status == ContactStatus.Approved) ? ContactOperations.Approve
-                                                                      : ContactOperations.Reject;
+            var contactOperation = (status == ContactStatus.Approved) ? Operations.Approve
+                                                                      : Operations.Reject;
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
                                         contactOperation);

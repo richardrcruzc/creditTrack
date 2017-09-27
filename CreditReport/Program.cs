@@ -24,23 +24,23 @@ namespace CreditReport
                 .Build();
 
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    //var context = services.GetRequiredService<CreditReportContext>();
-                    //DbInitializer.Initialize(context);
-                    var context = services.GetRequiredService<ApplicationDbContext>();
-                    SeedData.Initialize(services, "Q!w2e3r4").Wait();
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    try
+            //    {
+            //        //var context = services.GetRequiredService<CreditReportContext>();
+            //        //DbInitializer.Initialize(context);
+            //        var context = services.GetRequiredService<ApplicationDbContext>();
+            //        SeedData.Initialize(services, "Q!w2e3r4").Wait();
                     
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex.Message, "An error occurred while seeding the database.");
-                }
-            }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        var logger = services.GetRequiredService<ILogger<Program>>();
+            //        logger.LogError(ex.Message, "An error occurred while seeding the database.");
+            //    }
+            //}
 
             host.Run();
         }

@@ -36,7 +36,7 @@ namespace CreditReport.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["descriptionSortParm"] = String.IsNullOrEmpty(sortOrder) ? "description" : "";
          
-
+           
             if (searchString != null  )
             {
                 page = 1;
@@ -121,7 +121,8 @@ namespace CreditReport.Controllers
         [HttpPost]       
         public async Task<IActionResult> AgregarPregunta(string NuevaPregunta, int QuestionID = 0)
         {
-            if(string.IsNullOrEmpty(NuevaPregunta))
+
+            if (string.IsNullOrEmpty(NuevaPregunta))
                 return RedirectToAction("index");
 
             var user = _userManager.GetUserName(User);

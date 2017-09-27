@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using CreditReport.Authorization;
 using CreditReport.Data.PersonalInformation;
+using Microsoft.AspNetCore.Identity;
 
 namespace CreditReport
 {
@@ -55,7 +56,7 @@ namespace CreditReport
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders(); 
 
             services.AddMvc();
 
@@ -95,7 +96,7 @@ namespace CreditReport
                                   ContactIsOwnerAuthorizationHandler>();
 
             services.AddSingleton<IAuthorizationHandler,
-                                  ContactAdministratorsAuthorizationHandler>();
+                                  AdministratorsAuthorizationHandler>();
 
             services.AddSingleton<IAuthorizationHandler,
                                   ContactManagerAuthorizationHandler>();
@@ -132,18 +133,18 @@ namespace CreditReport
             //                               "dotnet user-secrets set SeedUserPW <pw>");
             //}
 
-            //try
-            //{
-            //    SeedData.Initialize(app.ApplicationServices, testUserPw).Wait();
-            //}
-            //catch
-            //{
-            //    throw new System.Exception("You need to update the DB "
-            //        + "\nPM > Update-Database " + "\n or \n" +
-            //          "> dotnet ef database update"
-            //          + "\nIf that doesn't work, comment out SeedData and "
-            //          + "register a new user");
-            //}
+            try
+            {
+                SeedData.Initialize(app.ApplicationServices, "Q!w2e3r4").Wait();
+            }
+            catch(Exception ex)
+            {
+                throw new System.Exception("You need to update the DB "
+                    + "\nPM > Update-Database " + "\n or \n" +
+                      "> dotnet ef database update"
+                      + "\nIf that doesn't work, comment out SeedData and "
+                      + "register a new user");
+            }
             #endregion
         }
     }
