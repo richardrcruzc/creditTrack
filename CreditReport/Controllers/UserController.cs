@@ -169,6 +169,7 @@ namespace CreditReport.Controllers
             }
             return PartialView("_EditUser", model);
         }
+        [AllowAnonymous]
         [HttpPost]
         public JsonResult AjaxMethod(string value)
         {

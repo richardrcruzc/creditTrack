@@ -119,7 +119,7 @@ namespace CreditReport.Controllers
         }
 
         // GET: People/Details/5
-        [Authorize(Roles = "Administrators")]
+        //[Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

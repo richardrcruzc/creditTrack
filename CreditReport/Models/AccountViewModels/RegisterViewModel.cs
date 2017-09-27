@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,12 +9,13 @@ namespace CreditReport.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Favor Digitar el Nombre del Representante o Dueño.")]
         [StringLength(100, ErrorMessage = "El {0} debe de ser almenos {2} y ub maxino de {1} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Text)]
         [Display(Name = "Nombre y Apellido")]
         public string Name { get; set; }
         [Display(Name = "Nombre Empresa o Negocio")]
+        [Required(ErrorMessage ="Favor Digitar el Nombre del Negocio o Empresa")]
         [DataType(DataType.Text)]
         public string Empresa { get; set; }
 
@@ -29,6 +31,8 @@ namespace CreditReport.Models.AccountViewModels
         public string Provincia { get; set; }
 
 
+        public List<SelectListItem> Municipios { get; set; }
+        public List<SelectListItem> Provincias { get; set; }
 
         [Required]
         [EmailAddress]

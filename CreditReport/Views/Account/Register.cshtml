@@ -8,51 +8,170 @@
 <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
     <h4>Registrarse como usuario.</h4>
     <hr />
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Empresa" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Empresa" class="form-control" />
-            <span asp-validation-for="Empresa" class="text-danger"></span>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+     
+        <div class="form-group">
+            <label asp-for="Empresa" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Empresa" class="form-control" />
+                <span asp-validation-for="Empresa" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Name" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            <label asp-for="Calle" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Calle" class="form-control" />
+                <span asp-validation-for="Calle" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Barrio" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Barrio" class="form-control" />
+                <span asp-validation-for="Barrio" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Sector" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Sector" class="form-control" />
+                <span asp-validation-for="Sector" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Provincia" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="Provincia" asp-items="@Model.Provincias" class="form-control">
+                    <option>Favor Seleccionar</option>
+
+                </select>
+                <span asp-validation-for="Provincia" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Municipio" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="Municipio" asp-items="@Model.Municipios" class="form-control">
+                    <option>Favor Seleccionar</option>
+                </select>
+                <span asp-validation-for="Municipio" class="text-danger"></span>
+            </div>
+        </div>
 
 
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Email" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Password" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Registrarse</button>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">Registrarse</button>
+            </div>
         </div>
-    </div>
 </form>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+<script type="text/javascript">
+            $(function () {
+                //$("select").each(function () {
+                //    if ($(this).find("option").length <= 1) {
+                //        $(this).attr("disabled", "disabled");
+                //    }
+                //});
+
+                $("#Provincia").change(function () {
+                    var value = "";
+                    if ($(this).val() != "") {
+                        value = $(this).val();
+                    }
+                    var id = $(this).attr("id");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/User/AjaxMethod",
+                        data: {value: value },
+                        //contentType: "application/json; charset=utf-8",
+                        //dataType: "json",
+                        success: function (response) {
+                            var dropDownId = "#Municipio";
+                            DisableDropDown(dropDownId);
+                            PopulateDropDown("#Municipio", response);
+
+                            //var list;
+                            //switch (id) {
+                            //    case "CountryId":
+                            //        list = response.States;
+                            //        DisableDropDown("#StateId");
+                            //        DisableDropDown("#CityId");
+                            //        PopulateDropDown("#StateId", list);
+                            //        break;
+                            //    case "StateId":
+                            //        dropDownId = "#CityId";
+                            //        list = response.Cities;
+                            //        DisableDropDown("#CityId");
+                            //        PopulateDropDown("#CityId", list);
+                            //        break;
+                            //}
+
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                });
+            });
+
+            function DisableDropDown(dropDownId) {
+                $(dropDownId).attr("disabled", "disabled");
+                $(dropDownId).empty().append('<option selected="selected" value="0">Favor Seleccionar</option>');
+            }
+
+            function PopulateDropDown(dropDownId, list) {
+                if (list != null && list.length > 0) {
+                    $(dropDownId).removeAttr("disabled");
+                    $.each(list, function () {
+
+                        $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+                    });
+                }
+            }
+
+            //$(function () {
+            //    if ($("#CountryId").val() != "" && $("#StateId").val() != "" && $("#CityId").val() != "") {
+            //        var message = "Country: " + $("#CountryId option:selected").text();
+            //        message += "\nState: " + $("#StateId option:selected").text();
+            //        message += "\nCity: " + $("#CityId option:selected").text();
+            //        alert(message);
+            //    }
+            //});
+</script>
 }

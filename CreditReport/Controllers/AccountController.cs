@@ -13,12 +13,15 @@ using CreditReport.Models;
 using CreditReport.Models.AccountViewModels;
 using CreditReport.Services;
 using CreditReport.Authorization;
+using CreditReport.Data;
 
 namespace CreditReport.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -27,6 +30,7 @@ namespace CreditReport.Controllers
         private readonly string _externalCookieScheme;
 
         public AccountController(
+            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<IdentityCookieOptions> identityCookieOptions,
@@ -34,6 +38,7 @@ namespace CreditReport.Controllers
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
@@ -100,7 +105,22 @@ namespace CreditReport.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+
+            RegisterViewModel model = new RegisterViewModel();
+            model.Provincias = _context.Provinces
+               .Where(p => p.MotherProvince == null)
+               .OrderBy(n => n.Name)
+               .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+
+            if (!string.IsNullOrEmpty(model.Provincia))
+            {
+                model.Municipios = _context.Provinces
+                  .Where(p => p.MotherProvince.Name == model.Provincia)
+                  .OrderBy(n => n.Name)
+                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+            }
+
+            return View(model);
         }
 
         //
@@ -143,6 +163,19 @@ namespace CreditReport.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+
+                        model.Provincias = _context.Provinces
+               .Where(p => p.MotherProvince == null)
+               .OrderBy(n => n.Name)
+               .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+
+            if (!string.IsNullOrEmpty(model.Provincia))
+            {
+                model.Municipios = _context.Provinces
+                  .Where(p => p.MotherProvince.Name == model.Provincia)
+                  .OrderBy(n => n.Name)
+                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+            }
             return View(model);
         }
 
