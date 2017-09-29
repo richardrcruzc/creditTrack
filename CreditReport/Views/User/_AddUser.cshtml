@@ -5,48 +5,86 @@
     @await Html.PartialAsync("_ModalHeader", new ModalHeader { Heading = "Add User" })
     <div class="modal-body form-horizontal">
         <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="Name" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-6">
-                        <input asp-for="Name" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-6">
-                        <input asp-for="Email" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApplicationRoleId" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-6">
-                        <select asp-for="ApplicationRoleId" asp-items="@Model.ApplicationRoles" class="form-control">
-                            <option>Please select</option>
-                        </select>
-                    </div>
+            <div class="form-group">
+                <label asp-for="Empresa" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="Empresa" class="form-control" />
+                    <span asp-validation-for="Empresa" class="text-danger"></span>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label asp-for="UserName" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-6">
-                        <input asp-for="UserName" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-6">
-                        <input asp-for="Password" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ConfirmPassword" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-6">
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                    </div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="Telefono" class="form-control" />
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Calle" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="Calle" class="form-control" />
+                    <span asp-validation-for="Calle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Barrio" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="Barrio" class="form-control" />
+                    <span asp-validation-for="Barrio" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sector" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="Sector" class="form-control" />
+                    <span asp-validation-for="Sector" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Provincia" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <select asp-for="Provincia" asp-items="@Model.Provincias" class="form-control">
+                        <option>Favor Seleccionar</option>
+                    </select>
+                    <span asp-validation-for="Provincia" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Municipio" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <select asp-for="Municipio" asp-items="@Model.Municipios" class="form-control">
+                        <option>Favor Seleccionar</option>
+                    </select>
+                    <span asp-validation-for="Municipio" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationRoleId" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <select asp-for="ApplicationRoleId" asp-items="@Model.ApplicationRoles" class="form-control">
+                        <option>Favor Seleccionar</option>
+                    </select>
+                    <span asp-validation-for="ApplicationRoleId" class="text-danger"></span>
+                </div>
+            </div>
+
+
         </div>
     </div>
     @await Html.PartialAsync("_ModalFooter", new ModalFooter { })

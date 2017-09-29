@@ -63,9 +63,16 @@ namespace CreditReport.Controllers
             {
                 ApplicationUser user = new ApplicationUser
                 {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Empresa = model.Empresa,
                     Name = model.Name,
-                    UserName = model.UserName,
-                    Email = model.Email
+                    Calle = model.Calle,
+                    Barrio = model.Barrio,
+                    Sector = model.Sector,
+                    Municipio = model.Municipio,
+                    Provincia = model.Provincia,
+                    Telefono = model.Telefono
                 };
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -81,7 +88,7 @@ namespace CreditReport.Controllers
                     }
                 }
             }
-            return View(model);
+            return PartialView("_AddUser", model);
         }
 
         [HttpGet]
