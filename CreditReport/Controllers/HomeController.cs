@@ -9,7 +9,7 @@ namespace CreditReport.Controllers
 {
     public class HomeController : Controller
     {
-        [AllowAnonymous]
+         
         public IActionResult Index()
         {
             return View();
@@ -17,14 +17,14 @@ namespace CreditReport.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Quienes Somos y Que Hacemos.";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Informaciones para contactarnos.";
 
             return View();
         }

@@ -9,9 +9,10 @@ using CreditReport.Data.PersonalInformation;
 namespace CreditReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170928233506_pdp")]
+    partial class pdp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -259,8 +260,6 @@ namespace CreditReport.Migrations
                     b.Property<string>("Sector");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("Telefono");
 
                     b.Property<bool>("TwoFactorEnabled");
 

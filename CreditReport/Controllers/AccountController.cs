@@ -143,6 +143,7 @@ namespace CreditReport.Controllers
                       Sector =model.Sector,
                       Municipio=model.Municipio,
                       Provincia=model.Provincia,
+                      Telefono = model.Telefono
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

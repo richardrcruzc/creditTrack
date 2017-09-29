@@ -49,7 +49,8 @@
                     </tr>
                     <tr>
                         <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th>
-                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
+                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateBy)</th>
+    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
 
                     </tr>
                     @foreach (var item in Model.CreditHistories)
@@ -59,7 +60,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Note)
                             </td>
-
+                            <td>
+                                @Html.DisplayFor(modelItem=>item.CreateBy)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreateDate)
 

@@ -16,5 +16,6 @@ namespace CreditReport.Models
         public string Sector { get; set; }
         public string Municipio { get; set; }
         public string Provincia { get; set; }
+        public string Telefono { get; set; }
     }
 }

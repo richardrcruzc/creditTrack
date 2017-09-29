@@ -10,13 +10,15 @@ namespace CreditReport.Models.AccountViewModels
     {
         [Required]
         [EmailAddress]
+        [Display(Name ="Nombre de Usuario o Email")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Clave")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Recuerdame?")]
         public bool RememberMe { get; set; }
     }
 }

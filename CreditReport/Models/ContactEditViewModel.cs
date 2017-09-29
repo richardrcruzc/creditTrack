@@ -18,5 +18,6 @@ namespace CreditReport.Models
         public string Zip { get; set; }
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        public string Telefono { get; set; }
     }
 }
