@@ -6,7 +6,8 @@
 
 
 }
-<div class="container">
+<div class="container-fluid bg-grey text-center">
+
     <h2>Consultar Historial Crediticio Persona</h2>
 
     <div class="panel-group">
@@ -29,7 +30,7 @@
                     @Html.DisplayFor(model => model.FullName)
                 </dd>
 
-                
+
             </dl>
         </div>
         <div class="panel panel-info">
@@ -43,14 +44,14 @@
                                 <a asp-controller="People" asp-action="AgregarHistorial" class="btn btn-primary" asp-route-id="@Model.PersonID">
                                     <i class="glyphicon glyphicon-plus"></i>  Agregar historial
                                 </a>
-                             
+
                             </div>
                         </th>
                     </tr>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th>
-                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateBy)</th>
-    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateBy)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
 
                     </tr>
                     @foreach (var item in Model.CreditHistories)
@@ -61,7 +62,7 @@
                                 @Html.DisplayFor(modelItem => item.Note)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem=>item.CreateBy)
+                                @Html.DisplayFor(modelItem => item.CreateBy)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreateDate)

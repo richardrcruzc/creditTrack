@@ -4,65 +4,68 @@
     ViewData["Title"] = "Crear Persona";
 }
 
-<h2>Registrar historial Persona</h2>
+<div class="container-fluid bg-grey text-center">
 
-<form asp-action="Create">
-    <div class="form-horizontal">
-        <h4>Favor introducir las siguientes informaciones</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Identification" class="col-md-2 control-label cedula"></label>
-            <div class="col-md-10">
-                <input asp-for="Identification" class="form-control" />
-                <span asp-validation-for="Identification" class="text-danger"></span>
+
+    <h2>Registrar historial Persona</h2>
+
+    <form asp-action="Create">
+        <div class="form-horizontal">
+            <h4>Favor introducir las siguientes informaciones</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Identification" class="col-md-2 control-label cedula"></label>
+                <div class="col-md-10">
+                    <input asp-for="Identification" class="form-control" />
+                    <span asp-validation-for="Identification" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FirstName" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Crear" class="btn btn-default" />
+                </div>
             </div>
         </div>
-       
-        <div class="form-group">
-            <label asp-for="FirstName" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="LastName" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="LastName"  class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-        </div>
+    </form>
+</div>
 
-        
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-</form>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
- 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
 
-    <script>
-
-        $(".cedula").click(function () {
-            $.ajax({
-                url: "/people/cedula",
-                cache: false,
-                data: { cedula: cedula },
-                success: function (html) {
-                    //$("#results").append(html);
-                },
-                erro: function (html) {
-                   // $("#results").append(html);
-                }
+            $(".cedula").click(function () {
+                $.ajax({
+                    url: "/people/cedula",
+                    cache: false,
+                    data: { cedula: cedula },
+                    success: function (html) {
+                        //$("#results").append(html);
+                    },
+                    erro: function (html) {
+                        // $("#results").append(html);
+                    }
+                });
             });
-        });
 
-    </script>
-}
+        </script>
+    }

@@ -6,54 +6,53 @@
 
 <h2>Edit</h2>
 
-<form asp-action="Edit">
-    <div class="form-horizontal">
-        <h4>Person</h4>
-        <hr />
-           @if (ViewData.ModelState.Keys.Any(k=> ViewData.ModelState[k].Errors.Any())) {
-                    <div class="alert alert-danger">
-                        <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                         
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    </div>
-                    }
-    <input type="hidden" asp-for="PersonID" />
-        <div class="form-group">
-            <label asp-for="Identification" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Identification" class="form-control" />
-                <span asp-validation-for="Identification" class="text-danger"></span>
+<div class="container-fluid bg-grey text-center">
+    <form asp-action="Edit">
+        <div class="form-horizontal">
+            <h4>Person</h4>
+            <hr />
+            @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Any()))
+            {
+                <div class="alert alert-danger">
+                    <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            }
+            <input type="hidden" asp-for="PersonID" />
+            <div class="form-group">
+                <label asp-for="Identification" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Identification" class="form-control" />
+                    <span asp-validation-for="Identification" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FirstName" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
         </div>
-         
-        <div class="form-group">
-            <label asp-for="FirstName" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="LastName" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-        </div>
-         
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Regresar</a>
     </div>
-</form>
-
-<div>
-    <a asp-action="Index">Regresar</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

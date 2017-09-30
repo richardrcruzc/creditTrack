@@ -3,13 +3,16 @@
     ViewData["Title"] = "Registrarse";
 }
 
-<h2>@ViewData["Title"].</h2>
+<div class="container-fluid bg-grey text-center">
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Registrarse como usuario.</h4>
-    <hr />
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-     
+
+    <h2>@ViewData["Title"].</h2>
+
+    <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+        <h4>Registrarse como usuario.</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group">
             <label asp-for="Empresa" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -24,13 +27,13 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
         </div>
-    <div class="form-group">
-        <label asp-for="Telefono" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Telefono" class="form-control" />
-            <span asp-validation-for="Telefono" class="text-danger"></span>
-        </div>
-    </div><div class="form-group">
+        <div class="form-group">
+            <label asp-for="Telefono" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+        </div><div class="form-group">
             <label asp-for="Calle" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="Calle" class="form-control" />
@@ -98,12 +101,12 @@
                 <button type="submit" class="btn btn-default">Registrarse</button>
             </div>
         </div>
-</form>
+    </form>
+</div>
+    @section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-
-<script type="text/javascript">
+        <script type="text/javascript">
             $(function () {
                 //$("select").each(function () {
                 //    if ($(this).find("option").length <= 1) {
@@ -121,7 +124,7 @@
                     $.ajax({
                         type: "POST",
                         url: "/User/AjaxMethod",
-                        data: {value: value },
+                        data: { value: value },
                         //contentType: "application/json; charset=utf-8",
                         //dataType: "json",
                         success: function (response) {
@@ -179,5 +182,5 @@
             //        alert(message);
             //    }
             //});
-</script>
-}
+        </script>
+    }
