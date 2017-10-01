@@ -43,12 +43,13 @@ namespace CreditReport.Models.AccountViewModels
         public List<SelectListItem> Municipios { get; set; }
         public List<SelectListItem> Provincias { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="EL E-Mail es requerido.")]
         [EmailAddress]
         [Display(Name = "E-Mail")]
         public string Email { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessage = "La Clave es Requerida.")]
         [StringLength(100, ErrorMessage = "La {0} Debe de Ser Almenos {2} y un Maximo de {1} Caracteres de longitud.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Clave")]
