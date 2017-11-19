@@ -6,8 +6,7 @@
 
 
 }
-<div class="container-fluid bg-grey text-center">
-
+<div class="container">
     <h2>Consultar Historial Crediticio Persona</h2>
 
     <div class="panel-group">
@@ -29,7 +28,7 @@
                 <dd>
                     @Html.DisplayFor(model => model.Person.FullName)
                 </dd>
-
+                
                 
             </dl>
         </div>
@@ -44,7 +43,7 @@
                                 <a asp-controller="People" asp-action="AgregarHistorial" class="btn btn-primary" asp-route-id="@Model.Person.PersonID">
                                     <i class="glyphicon glyphicon-plus"></i>  Agregar historial
                                 </a>
-
+                             
                             </div>
                         </th>
                     </tr>
