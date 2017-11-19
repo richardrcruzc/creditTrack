@@ -75,7 +75,7 @@ namespace CreditReport.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation(1, "User logged in.");
+                    _logger.LogInformation(1, "Usuario Login.");
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -84,12 +84,12 @@ namespace CreditReport.Controllers
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning(2, "User account locked out.");
+                    _logger.LogWarning(2, "Cuenta del usuario desactivada temporalmente.");
                     return View("Lockout");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Intento no validos.");
                     return View(model);
                 }
             }
@@ -157,7 +157,7 @@ namespace CreditReport.Controllers
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
+                    _logger.LogInformation(3, "Usuario creo un password.");
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
@@ -187,7 +187,7 @@ namespace CreditReport.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation(4, "User logged out.");
+            _logger.LogInformation(4, "Usuario logout.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 

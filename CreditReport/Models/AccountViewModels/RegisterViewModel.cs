@@ -35,28 +35,29 @@ namespace CreditReport.Models.AccountViewModels
          [DataType(DataType.Text)]
         [Required(ErrorMessage = "Favor Digitar la Provincia.")]
         public string Provincia { get; set; }
-        [Required(ErrorMessage = "Favor Digitar Teléfono.")]
 
+        [Required(ErrorMessage = "Favor Digitar Teléfono.")]
         [Display(Name = "Teléfono")]
         [DataType(DataType.PhoneNumber)]
         public string Telefono { get; set; }
         public List<SelectListItem> Municipios { get; set; }
         public List<SelectListItem> Provincias { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Favor Digitar el Email.")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Required(ErrorMessage = "Favor Digitar la Clave.")]
+        [StringLength(100, ErrorMessage = "El  {0} debe ser almenos {2}  y un máximo de {1} characteres.", MinimumLength = 6)]
+        [DataType(DataType.Password, ErrorMessage = "La clave debe contener almenos un caracter espcial ! @ # $ % ^ & * (), y almenos una letra en mayuscula")]
+        [Display(Name = "Clave")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Favor Confirmar Clave.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar Clave")]
+        [Compare("Password", ErrorMessage = "The Clave y  confirmar Clave deben ser iguales.")]
         public string ConfirmPassword { get; set; }
     }
 }

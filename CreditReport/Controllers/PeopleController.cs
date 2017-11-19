@@ -136,14 +136,44 @@ namespace CreditReport.Controllers
                 return NotFound();
             }
 
-            return View(person);
+            var personModel = new PersonModel {PersonID = person.PersonID,  Identification  = person.Identification, FirstName = person.FirstName, LastName = person.LastName };
+             
+
+            var model = new PersonCreditListModel
+            {
+                Person = personModel,
+            };
+
+
+            foreach (var p in person.CreditHistories)
+            {
+                if (string.IsNullOrEmpty(p.CreateBy))
+                    continue;
+                var user = await _userManager.FindByEmailAsync(p.CreateBy);
+                if (user == null)
+                    continue;
+                model.History.Add(new CreditHistoryModel {
+                     Description = p.Note ,
+                      Empresa = user.Empresa,
+                       Fecha = p.CreateDate,
+                    CreditHistoryID = p.CreditHistoryID,
+                    PersonID = person.PersonID,
+                });
+
+
+            }
+
+
+            
+
+            return View(model);
         }
 
         // GET: People/Create
 
         public IActionResult Agregar()
         {
-            return View();
+            return View(new PeopleAddModel());
         }
 
         // POST: People/Create
@@ -176,10 +206,15 @@ namespace CreditReport.Controllers
                     _context.Add(persona);
                     
                     await _context.SaveChangesAsync();
+                    ModelState.Clear();
+                    p= new PeopleAddModel
+                    {
+                        Results = "La Persona ha Sido Creada."
+                    };
+                    
+                    // This will clear whatever form items have been populated
+                    // ModelState.Clear();
 
-
-                    ModelState.AddModelError("","La Persona ha Sido Creada.");
-                    //return RedirectToAction("Index");
                 }
             }
             catch (DbUpdateException  ex )
@@ -231,8 +266,11 @@ namespace CreditReport.Controllers
                     _context.Update(persona);
 
                     await _context.SaveChangesAsync();
+                    ModelState.Clear();
 
-                    ModelState.AddModelError("", "El historial hasido creado.");
+
+                    c.Resultados =  "El historial hasido creado.";
+                    c.Description = "";
                     //return RedirectToAction("Index");
 
                     c.FirstName = persona.FirstName;

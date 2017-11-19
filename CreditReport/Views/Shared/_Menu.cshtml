@@ -29,12 +29,12 @@ var cu =await UserManager.GetUserAsync(User);
             <li><a asp-area="" asp-controller="User" asp-action="Index">User</a></li>
             }
 
-}
-else
-{
+        }
+        else
+        {
+            <li><a asp-area="" asp-controller="Home" asp-action="About">Quienes somos</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactenos</a></li>
 
- }
-<li><a asp-area="" asp-controller="Home" asp-action="About">Quienes somos</a></li>
-<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactenos</a></li>
+        }
 
 </ul>

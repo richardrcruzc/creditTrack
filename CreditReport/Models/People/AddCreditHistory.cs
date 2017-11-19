@@ -25,6 +25,8 @@ namespace CreditReport.Models.People
         [StringLength(1500, MinimumLength = 5, ErrorMessage = "Favor Digitar una Descripción mas Amplia o Detallada.")]
         public string Description { get; set; }
 
+        public string Resultados { get; set; }
+
 
         [Display(Name = "Nombre Completo")]
         public string FullName

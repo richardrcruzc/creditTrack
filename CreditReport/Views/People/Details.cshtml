@@ -1,4 +1,4 @@
-@model CreditReport.Data.PersonalInformation.Person
+@model CreditReport.Models.PersonCreditListModel
 
 @{
     ViewData["Title"] = "Details";
@@ -16,31 +16,31 @@
 
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.Identification)
+                    @Html.DisplayNameFor(model => model.Person.Identification)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.Identification)
+                    @Html.DisplayFor(model => model.Person.Identification)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.FullName)
+                    @Html.DisplayNameFor(model => model.Person.FullName)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.FullName)
+                    @Html.DisplayFor(model => model.Person.FullName)
                 </dd>
-
+                
                 
             </dl>
         </div>
         <div class="panel panel-info">
-            <div class="panel-heading">@Html.DisplayNameFor(model => model.CreditHistories)</div>
+            <div class="panel-heading">@Html.DisplayNameFor(model => model.History)</div>
             <div class="panel-body">
 
                 <table class="table">
                     <tr>
                         <th colspan="5">
                             <div class="btn-group">
-                                <a asp-controller="People" asp-action="AgregarHistorial" class="btn btn-primary" asp-route-id="@Model.PersonID">
+                                <a asp-controller="People" asp-action="AgregarHistorial" class="btn btn-primary" asp-route-id="@Model.Person.PersonID">
                                     <i class="glyphicon glyphicon-plus"></i>  Agregar historial
                                 </a>
                              
@@ -48,26 +48,29 @@
                         </th>
                     </tr>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().Note)</th>
-                        <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateBy)</th>
-    <th>@Html.DisplayNameFor(model => Model.CreditHistories.FirstOrDefault().CreateDate)</th>
+
+                        <th>@Html.DisplayNameFor(model => Model.History.FirstOrDefault().Empresa)</th>
+                        
+    <th>@Html.DisplayNameFor(model => Model.History.FirstOrDefault().Fecha)</th>
+
+                        <th>@Html.DisplayNameFor(model => Model.History.FirstOrDefault().Description)</th>
 
                     </tr>
-                    @foreach (var item in Model.CreditHistories)
+                    @foreach (var item in Model.History)
                     {
 
                         <tr>
+                           
                             <td>
-                                @Html.DisplayFor(modelItem => item.Note)
+                                @Html.DisplayFor(modelItem=>item.Empresa)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem=>item.CreateBy)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CreateDate)
+                                @Html.DisplayFor(modelItem => item.Fecha )
 
                             </td>
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
 
                         </tr>
                     }

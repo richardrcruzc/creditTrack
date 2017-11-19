@@ -60,6 +60,14 @@
                         </div>
                     }
 
+                    @if (!String.IsNullOrEmpty(Model.Resultados))
+                    {
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <div   class="text-success">@Model.Resultados</div>
+                        </div>
+                    }
+
 
                     <textarea asp-for="Description" rows="5" cols="40" placeholder="Favor describir la situacion lo mas detallada posible, especificando el monto y la fecha"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
