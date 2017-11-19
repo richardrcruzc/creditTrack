@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <None Remove="Properties\PublishProfiles\CreditReport20170927120941 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\DriveDropWeb20170717041204 - FTP.pubxml" />
+    <None Remove="Properties\PublishProfiles\DriveDropWeb20170717041204 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\Elfuidatapy - Web Deploy.pubxml" />
   </ItemGroup>
 

@@ -28,6 +28,20 @@ namespace CreditReport.Controllers
 
             return View();
         }
+        public IActionResult Services()
+        {
+            return View();
+        }
+        public IActionResult Portfolio()
+        {
+            return View();
+        }
+        public IActionResult Pricing()
+        {
+            return View();
+        }
+        
+
 
         public IActionResult Error()
         {

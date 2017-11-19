@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="container">
+
+<div class="container-fluid bg-grey text-center">
     <h2>Lista de personas</h2>
     <p>
         <a asp-action="Agregar">Agregar persona</a>
@@ -12,7 +13,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Buscar por las Siguientes Informaciones:</div>
             <div class="panel-body">
-              
+
                 <form asp-action="Index" method="get">
                     <div class="form-actions no-color">
                         <p>
@@ -23,7 +24,7 @@
                         </p>
                     </div>
                 </form>
-               
+
             </div>
         </div>
 

@@ -1,0 +1,336 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html lang="es-do">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] -  El Fui Data Py</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @*<environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>*@
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#about">ABOUT</a></li>
+                    <li><a href="#services">SERVICES</a></li>
+                    <li><a href="#portfolio">PORTFOLIO</a></li>
+                    <li><a href="#pricing">PRICING</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        <div class="jumbotron text-center">
+            <h1>El Fui Data Py</h1>
+            <p>Nos Especializamos en Ofrecer Informaciones Crediticia</p>
+            @RenderBody()
+        </div>
+    </div>
+
+
+    @RenderSection("Scripts", required: false)
+    <!-- Container (About Section) -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>Sobre Nuestra Empresa</h2>
+                <h4>Lorem ipsum..</h4>
+                <p>Lorem ipsum..</p>
+                <a class="btn btn-default btn-lg" asp-action="contact" asp-controller="home">Contactenos</a>
+            </div>
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-signal logo"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-grey">
+        <div class="row">
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-globe logo"></span>
+            </div>
+            <div class="col-sm-8">
+
+                <h2>Nuestros Valores</h2>
+                <h4><strong>MISION:</strong> Our mission lorem ipsum..</h4>
+                <p><strong>VISION:</strong> Our vision Lorem ipsum..
+            </div>
+        </div>
+    </div> 
+    <!-- Container (Services Section) -->
+    <div class="container-fluid text-center">
+        <h2>SERVICES</h2>
+        <h4>What we offer</h4>
+        <br>
+        <div class="row">
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-off logo-small"></span>
+                <h4>POWER</h4>
+                <p>Lorem ipsum dolor sit amet..</p>
+            </div>
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-heart logo-small"></span>
+                <h4>LOVE</h4>
+                <p>Lorem ipsum dolor sit amet..</p>
+            </div>
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-lock logo-small"></span>
+                <h4>JOB DONE</h4>
+                <p>Lorem ipsum dolor sit amet..</p>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-leaf logo-small"></span>
+                <h4>GREEN</h4>
+                <p>Lorem ipsum dolor sit amet..</p>
+            </div>
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-certificate logo-small"></span>
+                <h4>CERTIFIED</h4>
+                <p>Lorem ipsum dolor sit amet..</p>
+            </div>
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-wrench logo-small"></span>
+                <h4 style="color:#303030;">HARD WORK</h4>
+                <p>Lorem ipsum dolor sit amet..</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center bg-grey">
+        <h2>Portfolio</h2>
+        <h4>What we have created</h4>
+        <div class="row text-center">
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src="paris.jpg" alt="Paris">
+                    <p><strong>Paris</strong></p>
+                    <p>Yes, we built Paris</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src="newyork.jpg" alt="New York">
+                    <p><strong>New York</strong></p>
+                    <p>We built New York</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src="sanfran.jpg" alt="San Francisco">
+                    <p><strong>San Francisco</strong></p>
+                    <p>Yes, San Fran is ours</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>What our customers say</h2>
+    <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <h4>"This company is the best. I am so happy with the result!"<br><span style="font-style:normal;">Michael Roe, Vice President, Comment Box</span></h4>
+            </div>
+            <div class="item">
+                <h4>"One word... WOW!!"<br><span style="font-style:normal;">John Doe, Salesman, Rep Inc</span></h4>
+            </div>
+            <div class="item">
+                <h4>"Could I... BE any more happy with this company?"<br><span style="font-style:normal;">Chandler Bing, Actor, FriendsAlot</span></h4>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="text-center">
+            <h2>Pricing</h2>
+            <h4>Choose a payment plan that works for you</h4>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default text-center">
+                    <div class="panel-heading">
+                        <h1>Basic</h1>
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>20</strong> Lorem</p>
+                        <p><strong>15</strong> Ipsum</p>
+                        <p><strong>5</strong> Dolor</p>
+                        <p><strong>2</strong> Sit</p>
+                        <p><strong>Endless</strong> Amet</p>
+                    </div>
+                    <div class="panel-footer">
+                        <h3>$19</h3>
+                        <h4>per month</h4>
+                        <button class="btn btn-lg">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default text-center">
+                    <div class="panel-heading">
+                        <h1>Pro</h1>
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>50</strong> Lorem</p>
+                        <p><strong>25</strong> Ipsum</p>
+                        <p><strong>10</strong> Dolor</p>
+                        <p><strong>5</strong> Sit</p>
+                        <p><strong>Endless</strong> Amet</p>
+                    </div>
+                    <div class="panel-footer">
+                        <h3>$29</h3>
+                        <h4>per month</h4>
+                        <button class="btn btn-lg">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default text-center">
+                    <div class="panel-heading">
+                        <h1>Premium</h1>
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>100</strong> Lorem</p>
+                        <p><strong>50</strong> Ipsum</p>
+                        <p><strong>25</strong> Dolor</p>
+                        <p><strong>10</strong> Sit</p>
+                        <p><strong>Endless</strong> Amet</p>
+                    </div>
+                    <div class="panel-footer">
+                        <h3>$49</h3>
+                        <h4>per month</h4>
+                        <button class="btn btn-lg">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+@*<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">El Fui Data Py</a>
+
+
+            </div>
+            <div class="navbar-collapse collapse">
+                @await Html.PartialAsync("_Menu")
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </nav>*@
+
+
+@*            <footer>
+                    <p>&copy; 2017 - El Fui Data Py</p>
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-google"></a>
+                    <a href="#" class="fa fa-linkedin"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-pinterest"></a>
+                    <a href="#" class="fa fa-snapchat-ghost"></a>
+                    <a href="#" class="fa fa-skype"></a>
+                    <a href="#" class="fa fa-android"></a>
+                    <a href="#" class="fa fa-dribbble"></a>
+                    <a href="#" class="fa fa-vimeo"></a>
+                    <a href="#" class="fa fa-tumblr"></a>
+                    <a href="#" class="fa fa-vine"></a>
+                    <a href="#" class="fa fa-foursquare"></a>
+                    <a href="#" class="fa fa-stumbleupon"></a>
+                    <a href="#" class="fa fa-flickr"></a>
+                    <a href="#" class="fa fa-yahoo"></a>
+                    <a href="#" class="fa fa-reddit"></a>
+                    <a href="#" class="fa fa-rss"></a>
+
+                </footer>
+            </div>
+
+        <environment names="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+        </environment>
+        <environment names="Staging,Production">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+            </script>
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+        </environment>
+
+    @RenderSection("Scripts", required: false)
+    </body>
+    </html>
+*@

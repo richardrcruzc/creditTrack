@@ -45,19 +45,19 @@ namespace CreditReport.Models.AccountViewModels
 
         [Required(ErrorMessage = "Favor Digitar el Email.")]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "E-Mail")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Favor Digitar la Clave.")]
-        [StringLength(100, ErrorMessage = "El  {0} debe ser almenos {2}  y un máximo de {1} characteres.", MinimumLength = 6)]
-        [DataType(DataType.Password, ErrorMessage = "La clave debe contener almenos un caracter espcial ! @ # $ % ^ & * (), y almenos una letra en mayuscula")]
-        [Display(Name = "Clave")]
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Favor Confirmar Clave.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmar Clave")]
-        [Compare("Password", ErrorMessage = "The Clave y  confirmar Clave deben ser iguales.")]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }
