@@ -39,7 +39,8 @@ namespace CreditReport.Controllers
                 Id = u.Id,
                 Empresa=u.Empresa,
                 Name = u.Name,
-                Email = u.Email
+                Email = u.Email,
+                
             }).ToList();
             return View(model);
         }
@@ -119,10 +120,27 @@ namespace CreditReport.Controllers
                 ApplicationUser user = await userManager.FindByIdAsync(id);
                 if (user != null)
                 {
+                    try
+                    {
+                        var test =   userManager.GetRolesAsync(user).Result.FirstOrDefault();
+                        var ri = roleManager.Roles.Single(r => r.Name == userManager.GetRolesAsync(user).Result.Single()).Id;
+                        model.ApplicationRoleId = ri;
+                    }
+                    catch (Exception ex)
+                    {
+                        var mm = ex.Message;
+                    }
                     model.Empresa = user.Empresa;
                     model.Name = user.Name;
+                    model.Telefono = user.Telefono;
+                    model.Calle = user.Calle;
+                    model.Barrio = user.Barrio;
+                    model.Sector = user.Sector;
+                    model.Provincia = user.Provincia;
+                    model.Municipio = user.Municipio;
                     model.Email = user.Email;
-                    model.ApplicationRoleId = roleManager.Roles.Single(r => r.Name == userManager.GetRolesAsync(user).Result.Single()).Id;
+                    //if(ri!=null)
+                    //model.ApplicationRoleId = ri;
                 }
             }
             return PartialView("_EditUser", model);

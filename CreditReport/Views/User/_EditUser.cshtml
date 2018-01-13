@@ -1,4 +1,4 @@
-﻿﻿@model EditUserViewModel
+﻿@model EditUserViewModel
 @using CreditReport.Models.Users
 
 <form asp-action="EditUser" role="form">
@@ -65,7 +65,7 @@
                     <span asp-validation-for="Municipio" class="text-danger"></span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label asp-for="Email" class="col-lg-3 col-sm-3 control-label"></label>
                 <div class="col-lg-6">
@@ -84,79 +84,79 @@
                 </div>
             </div>
 
-         
+
         </div>
     </div>
     @await Html.PartialAsync("_ModalFooter", new ModalFooter { })
-</form> 
+</form>
 
 <script type="text/javascript">
-            $(function () {
-                //$("select").each(function () {
-                //    if ($(this).find("option").length <= 1) {
-                //        $(this).attr("disabled", "disabled");
-                //    }
-                //});
+    $(function () {
+        //$("select").each(function () {
+        //    if ($(this).find("option").length <= 1) {
+        //        $(this).attr("disabled", "disabled");
+        //    }
+        //});
 
-                $("#Provincia").change(function () {
-                    var value = "";
-                    if ($(this).val() != "") {
-                        value = $(this).val();
-                    }
-                    var id = $(this).attr("id");
-                
-                    $.ajax({
-                        type: "POST",
-                        url: "/User/AjaxMethod",
-                        data: {value: value },
-                        //contentType: "application/json; charset=utf-8",
-                        //dataType: "json",
-                        success: function (response) {
-                            var dropDownId = "#Municipio";
-                            DisableDropDown(dropDownId);
-                            PopulateDropDown("#Municipio", response);
-
-                            //var list;
-                            //switch (id) {
-                            //    case "CountryId":
-                            //        list = response.States;
-                            //        DisableDropDown("#StateId");
-                            //        DisableDropDown("#CityId");
-                            //        PopulateDropDown("#StateId", list);
-                            //        break;
-                            //    case "StateId":
-                            //        dropDownId = "#CityId";
-                            //        list = response.Cities;
-                            //        DisableDropDown("#CityId");
-                            //        PopulateDropDown("#CityId", list);
-                            //        break;
-                            //}
-
-                        },
-                        failure: function (response) {
-                            alert(response.responseText);
-                        },
-                        error: function (response) {
-                            alert(response.responseText);
-                        }
-                    });
-                });
-            });
-
-            function DisableDropDown(dropDownId) {
-                $(dropDownId).attr("disabled", "disabled");
-                $(dropDownId).empty().append('<option selected="selected" value="0">Favor Seleccionar</option>');
+        $("#Provincia").change(function () {
+            var value = "";
+            if ($(this).val() != "") {
+                value = $(this).val();
             }
+            var id = $(this).attr("id");
 
-            function PopulateDropDown(dropDownId, list) {
-                if (list != null && list.length > 0) {
-                    $(dropDownId).removeAttr("disabled");
-                    $.each(list, function () {
-                        
-                        $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
-                    });
+            $.ajax({
+                type: "POST",
+                url: "/User/AjaxMethod",
+                data: { value: value },
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: function (response) {
+                    var dropDownId = "#Municipio";
+                    DisableDropDown(dropDownId);
+                    PopulateDropDown("#Municipio", response);
+
+                    //var list;
+                    //switch (id) {
+                    //    case "CountryId":
+                    //        list = response.States;
+                    //        DisableDropDown("#StateId");
+                    //        DisableDropDown("#CityId");
+                    //        PopulateDropDown("#StateId", list);
+                    //        break;
+                    //    case "StateId":
+                    //        dropDownId = "#CityId";
+                    //        list = response.Cities;
+                    //        DisableDropDown("#CityId");
+                    //        PopulateDropDown("#CityId", list);
+                    //        break;
+                    //}
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
                 }
-            }
+            });
+        });
+    });
+
+    function DisableDropDown(dropDownId) {
+        $(dropDownId).attr("disabled", "disabled");
+        $(dropDownId).empty().append('<option selected="selected" value="0">Favor Seleccionar</option>');
+    }
+
+    function PopulateDropDown(dropDownId, list) {
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+            });
+        }
+    }
 
             //$(function () {
             //    if ($("#CountryId").val() != "" && $("#StateId").val() != "" && $("#CityId").val() != "") {

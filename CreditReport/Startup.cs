@@ -18,34 +18,25 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using CreditReport.Authorization;
 using CreditReport.Data.PersonalInformation;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CreditReport
 {
     public class Startup
     {
-        private IHostingEnvironment _hostingEnv;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets<Startup>();
-            }
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
-
-            _hostingEnv = env;
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
+        //// This method gets called by the runtime. Use this method to add services to the container.
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    services.AddMvc();
+        //}
         // This method gets called by the runtime. Use this method to add services to the container.
         #region ConfigureServices
         public void ConfigureServices(IServiceCollection services)
@@ -56,8 +47,25 @@ namespace CreditReport
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders(); 
+                .AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
+            // If you don't want the cookie to be automatically authenticated and assigned to HttpContext.User, 
+            // remove the CookieAuthenticationDefaults.AuthenticationScheme parameter passed to AddAuthentication.
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(options =>
+                    {
+                        options.LoginPath = "/Account/LogIn";
+                        options.LogoutPath = "/Account/Logout";
+                    });
+            //// If you want to tweak Identity cookies, they're no longer part of IdentityOptions.
+            //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
+            //services.AddAuthentication()
+            //        .AddFacebook(options =>
+            //        {
+            //            options.AppId = Configuration["auth:facebook:appid"];
+            //            options.AppSecret = Configuration["auth:facebook:appsecret"];
+            //        });
             services.AddMvc();
 
             // Add application services.
@@ -104,13 +112,41 @@ namespace CreditReport
         }
         #endregion
 
+
+        //private IHostingEnvironment _hostingEnv;
+
+        //public Startup(IHostingEnvironment env)
+        //{
+        //    var builder = new ConfigurationBuilder()
+        //        .SetBasePath(env.ContentRootPath)
+        //        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        //        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+        //    if (env.IsDevelopment())
+        //    {
+        //        // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+        //        builder.AddUserSecrets<Startup>();
+        //    }
+
+        //    builder.AddEnvironmentVariables();
+        //    Configuration = builder.Build();
+
+        //    _hostingEnv = env;
+        //}
+
+       // public IConfigurationRoot Configuration { get; }
+
+       
+
         #region Configure
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseBrowserLink();
             }
             else
             {
@@ -119,9 +155,12 @@ namespace CreditReport
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
-
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             //// Set password with the Secret Manager tool.
             //// dotnet user-secrets set SeedUserPW <pw>
@@ -133,18 +172,18 @@ namespace CreditReport
             //                               "dotnet user-secrets set SeedUserPW <pw>");
             //}
 
-            try
-            {
-                SeedData.Initialize(app.ApplicationServices, "Q!w2e3r4").Wait();
-            }
-            catch(Exception ex)
-            {
-                throw new System.Exception("You need to update the DB "
-                    + "\nPM > Update-Database " + "\n or \n" +
-                      "> dotnet ef database update"
-                      + "\nIf that doesn't work, comment out SeedData and "
-                      + "register a new user");
-            }
+            //try
+            //{
+            //    SeedData.Initialize(app.ApplicationServices, "Q!w2e3r4").Wait();
+            //}
+            //catch(Exception ex)
+            //{
+            //    throw new System.Exception("You need to update the DB "
+            //        + "\nPM > Update-Database " + "\n or \n" +
+            //          "> dotnet ef database update"
+            //          + "\nIf that doesn't work, comment out SeedData and "
+            //          + "register a new user");
+            //}
             #endregion
         }
     }

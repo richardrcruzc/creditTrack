@@ -14,27 +14,26 @@ var cu =await UserManager.GetUserAsync(User);
 }
 <ul class="nav navbar-nav">
 
-        @if (SignInManager.IsSignedIn(User))
-{
-
-    <li><a asp-area="" asp-controller="People" asp-action="query">Consultar Personas</a></li>
-<li><a asp-area="" asp-controller="People" asp-action="agregar">Registrar Personas</a></li>
-<li><a asp-area="" asp-controller="preguntas" asp-action="index">Preguntas </a></li>
-
-
-    if(isInRole==true)
+    @if (SignInManager.IsSignedIn(User))
     {
-            <li><a asp-area="" asp-controller="People" asp-action="index">Personas</a></li>
-            <li><a asp-area="" asp-controller="ApplicationRole" asp-action="Index">Role</a></li>
-            <li><a asp-area="" asp-controller="User" asp-action="Index">User</a></li>
-            }
+        <li><a asp-area="" asp-controller="People" asp-action="query">Consultar </a></li>
+        <li><a asp-area="" asp-controller="People" asp-action="agregar">Registrar</a></li>
+        <li><a asp-area="" asp-controller="preguntas" asp-action="index">Preguntas </a></li>
 
-        }
-        else
+
+        if (isInRole == true)
         {
-            <li><a asp-area="" asp-controller="Home" asp-action="About">Quienes somos</a></li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactenos</a></li>
 
+            <li><a asp-area="" asp-controller="ApplicationRole" asp-action="Index">Role</a></li>
+            <li><a asp-area="" asp-controller="User" asp-action="Index">Usuarios</a></li>
         }
+
+    }
+    else
+    {
+        <li><a asp-area="" asp-controller="Home" asp-action="About">Quienes somos</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactenos</a></li>
+
+    }
 
 </ul>

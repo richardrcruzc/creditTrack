@@ -75,10 +75,10 @@ namespace CreditReport.Controllers
             var isAuthorizedApprove = await _authorizationService.AuthorizeAsync(
                                            User, contact,
                                            Operations.Approve);
-
+             
             if (contact.Status != ContactStatus.Approved &&   // Not approved.
-                                  !isAuthorizedRead &&        // Don't own it.
-                                  !isAuthorizedApprove)       // Not a manager.
+                                  !isAuthorizedRead.Succeeded &&        // Don't own it.
+                                  !isAuthorizedApprove.Succeeded)       // Not a manager.
             {
                 return new ChallengeResult();
             }
@@ -120,7 +120,7 @@ namespace CreditReport.Controllers
             var isAuthorized = await _authorizationService.AuthorizeAsync(
                                                         User, contact,
                                                         Operations.Create);
-            if (!isAuthorized)
+            if (!isAuthorized.Succeeded)
             {
                 return new ChallengeResult();
             }
@@ -150,7 +150,7 @@ namespace CreditReport.Controllers
             var isAuthorized = await _authorizationService.AuthorizeAsync(
                                                         User, contact,
                                                         Operations.Update);
-            if (!isAuthorized)
+            if (!isAuthorized.Succeeded)
             {
                 return new ChallengeResult();
             }
@@ -179,7 +179,7 @@ namespace CreditReport.Controllers
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
                                                                 Operations.Update);
-            if (!isAuthorized)
+            if (!isAuthorized.Succeeded)
             {
                 return new ChallengeResult();
             }
@@ -193,7 +193,7 @@ namespace CreditReport.Controllers
                 var canApprove = await _authorizationService.AuthorizeAsync(User, contact,
                                         Operations.Approve);
 
-                if (!canApprove) contact.Status = ContactStatus.Submitted;
+                if (!canApprove.Succeeded) contact.Status = ContactStatus.Submitted;
             }
 
             _context.Update(contact);
@@ -220,7 +220,7 @@ namespace CreditReport.Controllers
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
                                         Operations.Delete);
-            if (!isAuthorized)
+            if (!isAuthorized.Succeeded)
             {
                 return new ChallengeResult();
             }
@@ -237,7 +237,7 @@ namespace CreditReport.Controllers
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
                                         Operations.Delete);
-            if (!isAuthorized)
+            if (!isAuthorized.Succeeded)
             {
                 return new ChallengeResult();
             }
@@ -260,7 +260,7 @@ namespace CreditReport.Controllers
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
                                         contactOperation);
-            if (!isAuthorized)
+            if (!isAuthorized.Succeeded)
             {
                 return new ChallengeResult();
             }

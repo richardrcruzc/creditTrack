@@ -11,5 +11,6 @@ namespace CreditReport.Models.Users
         public string RoleName { get; set; }
         public string Description { get; set; }
         public int NumberOfUsers { get; set; }
+        public string  CreatedDate { get; set; }
     }
 }

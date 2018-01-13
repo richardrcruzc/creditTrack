@@ -13,7 +13,7 @@ namespace CreditReport.Models.Users
 
 
         [Required(ErrorMessage = "Favor Digitar el Nombre del Representante o Dueño.")]
-        [StringLength(100, ErrorMessage = "El {0} debe de ser almenos {2} y un máxino de {1} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "El {0} debe de ser almenos {2} y un máxino de {1} caracteres.", MinimumLength = 3)]
         [DataType(DataType.Text)]
         [Display(Name = "Nombre y Apellido")]
         public string Name { get; set; }

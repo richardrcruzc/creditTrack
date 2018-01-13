@@ -15,10 +15,10 @@
         <table class="table table-bordered table-striped table-condensed">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Users</th>
-                    <th>Action</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Creado</th>
+                    <th>Accción</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,16 +27,16 @@
                     <tr>
                         <td>@item.RoleName</td>
                         <td>@item.Description</td>
-                        <td>@item.NumberOfUsers</td>
+                        <td>@item.CreatedDate</td>
                         <td>
                             <a id="addEditApplicationRoleModal" data-toggle="modal" asp-action="AddEditApplicationRole" asp-route-id="@item.Id" data-target="#modal-action-application-role"
                                class="btn btn-info">
-                                <i class="glyphicon glyphicon-pencil"></i>  Edit
+                                <i class="glyphicon glyphicon-pencil"></i>  Editar
                             </a>
                             @if (item.NumberOfUsers == 0)
                             {
                                 <a id="deleteApplicationRoleModal" data-toggle="modal" asp-action="DeleteApplicationRole" asp-route-id="@item.Id" data-target="#modal-action-application-role" class="btn btn-danger">
-                                    <i class="glyphicon glyphicon-trash"></i>  Delete
+                                    <i class="glyphicon glyphicon-trash"></i>  Borrar
                                 </a>
                             }
                         </td>
