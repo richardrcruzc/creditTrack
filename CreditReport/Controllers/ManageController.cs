@@ -45,12 +45,12 @@ namespace CreditReport.Controllers
         public async Task<IActionResult> Index(ManageMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Su password hasido cambiado."
+                : message == ManageMessageId.SetPasswordSuccess ? "Su password hasido actualizado."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Su autenticacion en dos paso hasido actualizado"
+                : message == ManageMessageId.Error ? "Ha ocurrido un error."
+                : message == ManageMessageId.AddPhoneSuccess ? "Su teléfono hasido agregado"
+                : message == ManageMessageId.RemovePhoneSuccess ? "Su teléfono hasido borrado"
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -233,7 +233,7 @@ namespace CreditReport.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User changed their password successfully.");
+                    _logger.LogInformation(3, "Usuario actualizo su password.");
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
                 AddErrors(result);
@@ -281,9 +281,9 @@ namespace CreditReport.Controllers
         public async Task<IActionResult> ManageLogins(ManageMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.AddLoginSuccess ? "The external login was added."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.RemoveLoginSuccess ? "Login exteno hasido removido."
+                : message == ManageMessageId.AddLoginSuccess ? "External login agregado"
+                : message == ManageMessageId.Error ? "Ha ocurrido un error."
                 : "";
             var user = await GetCurrentUserAsync();
             if (user == null)

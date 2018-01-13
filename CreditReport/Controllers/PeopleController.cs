@@ -207,11 +207,11 @@ namespace CreditReport.Controllers
                     
                     await _context.SaveChangesAsync();
                     ModelState.Clear();
-                    p= new PeopleAddModel
+                    var newP= new PeopleAddModel
                     {
                         Results = "La Persona ha Sido Creada."
                     };
-                    
+                    return View(newP);
                     // This will clear whatever form items have been populated
                     // ModelState.Clear();
 
