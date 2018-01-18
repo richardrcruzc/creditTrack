@@ -45,14 +45,20 @@ namespace CreditReport
         public static IWebHost BuildWebHost(string[] args) =>
            WebHost.CreateDefaultBuilder(args)
                .UseStartup<Startup>()
-             .ConfigureAppConfiguration((hostContext, config) =>
-             {
-                 // delete all default configuration providers
-                 config.Sources.Clear();
-                 config.AddJsonFile("appsettings.json", optional: true);
-               //  config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-             })
                .Build();
+
+
+        //public static IWebHost BuildWebHost(string[] args) =>
+        //   WebHost.CreateDefaultBuilder(args)
+        //       .UseStartup<Startup>()
+        //     .ConfigureAppConfiguration((hostContext, config) =>
+        //     {
+        //         // delete all default configuration providers
+        //         config.Sources.Clear();
+        //         config.AddJsonFile("appsettings.json", optional: true);
+        //       //  config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+        //     })
+        //       .Build();
 
         //var host = new WebHostBuilder()
         //    .UseKestrel()

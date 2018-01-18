@@ -49,16 +49,16 @@ namespace CreditReport
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
+           // services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
             // If you don't want the cookie to be automatically authenticated and assigned to HttpContext.User, 
             // remove the CookieAuthenticationDefaults.AuthenticationScheme parameter passed to AddAuthentication.
-            ////services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            ////        .AddCookie(options =>
-            ////        {
-            ////            options.LoginPath = "/Account/LogIn";
-            ////            options.LogoutPath = "/Account/Logout";
-            ////        });
-            //// If you want to tweak Identity cookies, they're no longer part of IdentityOptions.
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //        .AddCookie(options =>
+            //        {
+            //            options.LoginPath = "/Account/LogIn";
+            //            options.LogoutPath = "/Account/Logout";
+            //        });
+            //If you want to tweak Identity cookies, they're no longer part of IdentityOptions.
             //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
             //services.AddAuthentication()
             //        .AddFacebook(options =>
@@ -66,7 +66,7 @@ namespace CreditReport
             //            options.AppId = Configuration["auth:facebook:appid"];
             //            options.AppSecret = Configuration["auth:facebook:appsecret"];
             //        });
-            services.AddMvc();
+         
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -86,29 +86,31 @@ namespace CreditReport
             //});
             #endregion
 
-            #region snippet_defaultPolicy
-            // requires: using Microsoft.AspNetCore.Authorization;
-            //           using Microsoft.AspNetCore.Mvc.Authorization;
-            services.AddMvc(config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                                 .RequireAuthenticatedUser()
-                                 .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
-            #endregion           
+             #region snippet_defaultPolicy
+            //// requires: using Microsoft.AspNetCore.Authorization;
+            ////           using Microsoft.AspNetCore.Mvc.Authorization;
+            //services.AddMvc(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //                     .RequireAuthenticatedUser()
+            //                     .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
+             #endregion           
 
-            #region AuthorizationHandlers
-            // Authorization handlers.
-            services.AddScoped<IAuthorizationHandler,
-                                  ContactIsOwnerAuthorizationHandler>();
+             #region AuthorizationHandlers
+            //// Authorization handlers.
+            //services.AddScoped<IAuthorizationHandler,
+            //                      ContactIsOwnerAuthorizationHandler>();
 
-            services.AddSingleton<IAuthorizationHandler,
-                                  AdministratorsAuthorizationHandler>();
+            //services.AddSingleton<IAuthorizationHandler,
+            //                      AdministratorsAuthorizationHandler>();
 
-            services.AddSingleton<IAuthorizationHandler,
-                                  ContactManagerAuthorizationHandler>();
-            #endregion
+            //services.AddSingleton<IAuthorizationHandler,
+            //                      ContactManagerAuthorizationHandler>();
+             #endregion
+
+            services.AddMvc();
         }
         #endregion
 
@@ -141,7 +143,7 @@ namespace CreditReport
         #region Configure
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseAuthentication();
+           // app.UseAuthentication();
 
             if (env.IsDevelopment())
             {
@@ -154,6 +156,8 @@ namespace CreditReport
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
