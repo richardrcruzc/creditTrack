@@ -46,7 +46,7 @@ namespace CreditReport.Controllers
              
             if (!string.IsNullOrWhiteSpace(cedula))
             {
-                
+                cedula = cedula.Replace("-", "");
                 var exite =await _context.Persons.Where(x=>x.Identification==cedula).FirstOrDefaultAsync();
 
 
@@ -190,16 +190,18 @@ namespace CreditReport.Controllers
                     var user = _userManager.GetUserName(User);
                     var persona = new Person
                     {
-                        Identification = p.Identification,
+                        Identification = p.Identification.Replace("-",""),
                          LastName =p.LastName,
                          FirstName = p.FirstName,
                          Created = DateTime.Now,
                          CreateBy= user, 
                     };
 
-                    var credit = new CreditHistory { CreateDate = DateTime.Now, Note = p.Description, Person= persona };
-                    var credits = new List<CreditHistory>();
-                    credits.Add(credit);
+                    var credit = new CreditHistory { CreateDate = DateTime.Now, Note = p.Description, Person= persona, CreateBy=user };
+                    var credits = new List<CreditHistory>
+                    {
+                        credit
+                    };
 
                     persona.AddCreditHistory(credits);
 
