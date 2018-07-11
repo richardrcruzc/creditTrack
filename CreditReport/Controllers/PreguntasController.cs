@@ -71,7 +71,7 @@ namespace CreditReport.Controllers
 
             int pageSize = 5;
 
-            return View(await PaginatedList<Question>.CreateAsync(questions.AsNoTracking(), page ?? 1, pageSize));
+            return View(await PaginatedList<Question>.CreateAsync(questions.Include(r=>r.ChildrenQuestion).AsNoTracking(), page ?? 1, pageSize));
 
 
         }

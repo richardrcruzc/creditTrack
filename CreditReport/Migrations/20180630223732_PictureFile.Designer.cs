@@ -4,14 +4,16 @@ using CreditReport.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreditReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180630223732_PictureFile")]
+    partial class PictureFile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,13 +132,13 @@ namespace CreditReport.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CreditHistoryID");
+                    b.Property<int?>("PersonID");
 
                     b.Property<string>("PicturePath");
 
                     b.HasKey("PictureID");
 
-                    b.HasIndex("CreditHistoryID");
+                    b.HasIndex("PersonID");
 
                     b.ToTable("Picture");
                 });
@@ -402,9 +404,9 @@ namespace CreditReport.Migrations
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.Picture", b =>
                 {
-                    b.HasOne("CreditReport.Data.PersonalInformation.CreditHistory", "CreditHistory")
+                    b.HasOne("CreditReport.Data.PersonalInformation.Person", "Person")
                         .WithMany("Pictures")
-                        .HasForeignKey("CreditHistoryID");
+                        .HasForeignKey("PersonID");
                 });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.Province", b =>

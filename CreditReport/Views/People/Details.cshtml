@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Details";
 
-
+    var evidencia = 1;
 
 }
 <div class="container">
@@ -28,8 +28,8 @@
                 <dd>
                     @Html.DisplayFor(model => model.Person.FullName)
                 </dd>
-                
-                
+
+
             </dl>
         </div>
         <div class="panel panel-info">
@@ -43,35 +43,48 @@
                                 <a asp-controller="People" asp-action="AgregarHistorial" class="btn btn-primary" asp-route-id="@Model.Person.PersonID">
                                     <i class="glyphicon glyphicon-plus"></i>  Agregar historial
                                 </a>
-                             
+
                             </div>
                         </th>
                     </tr>
                     <tr>
 
                         <th>@Html.DisplayNameFor(model => Model.History.FirstOrDefault().Empresa)</th>
-                        
-    <th>@Html.DisplayNameFor(model => Model.History.FirstOrDefault().Fecha)</th>
+
+                        <th>@Html.DisplayNameFor(model => Model.History.FirstOrDefault().Fecha)</th>
 
                         <th>@Html.DisplayNameFor(model => Model.History.FirstOrDefault().Description)</th>
-
+                        <th>Evidencias</th>
                     </tr>
                     @foreach (var item in Model.History)
                     {
 
                         <tr>
-                           
+
                             <td>
-                                @Html.DisplayFor(modelItem=>item.Empresa)
+                                @Html.DisplayFor(modelItem => item.Empresa)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Fecha )
+                                @Html.DisplayFor(modelItem => item.Fecha)
 
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
+                            <td>
 
+                                @if (item.PictureModel.Count > 0)
+                                {
+                                    <select name="photoChoice" id="photoChoice">
+                                        <option value="">Select para ver evidencias</option>
+                                        @foreach (var pictures in item.PictureModel)
+                                        {
+                                            <option value="@pictures.PicturePath">Evidencia @evidencia</option>
+                                            evidencia++;
+                                        }
+                                    </select>
+                                }
+                            </td>
                         </tr>
                     }
                 </table>
@@ -80,4 +93,37 @@
         </div>
     </div>
 </div>
+<!-- Creates the bootstrap modal where the image will appear -->
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                <h4 class="modal-title" id="myModalLabel">Consultar imagen</h4>
+            </div>
+            <div class="modal-body">
+                <img src="" id="imagepreview" style="width: 400px; height: 364px;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+    <script>
+
+
+        $("#photoChoice").change(function () {
+            var end = this.value;
+            var firstDropVal = $('#photoChoice').val();
+            if (firstDropVal != "") {
+                $('#imagepreview').attr('src', firstDropVal); // here asign the image to the modal when the user click the enlarge link
+                $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+            }
+        });
+
+    </script>
+}

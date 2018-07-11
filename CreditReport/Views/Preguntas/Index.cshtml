@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="container">
+ 
     <h2>Preguntas por personas</h2>
    
     <div class="panel-group">
@@ -82,10 +82,31 @@
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
-            {
+                        {
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
+                                <td><i class="fa fa-question-circle" style="font-size:24px"></i>
+                                    <labe class="panel-title">@item.Description</labe>
+                                     @if (item.ChildrenQuestion.Count() > 0)
+                            {
+                            
+                                     <div><i class="fa fa-registered" style="font-size:24px"></i> 
+                                    
+                                        @foreach (var que in item.ChildrenQuestion)
+                                        {
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                @Html.DisplayFor(modelQue => que.Description)
+                                             repondida el: 
+                                                @Html.DisplayFor(modelQue => que.Created)
+                                            </div>
+                                        </div>
+
+                                        }
+                                     
+
+                                </div>
+                            
+                            }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Created)
@@ -93,12 +114,11 @@
 
 
                                 <td>
-                                    <a asp-action="Repuestas" asp-route-id="@item.QuestionID">Responder</a>
-                                    @*<a asp-action="Edit" asp-route-id="@item.PersonID">Editar</a> |
-                                <a asp-action="Details" asp-route-id="@item.PersonID">Detalles</a> |
-                                <a asp-action="Delete" asp-route-id="@item.PersonID">Borrar</a>*@
+                                    <a asp-action="Repuestas" asp-route-id="@item.QuestionID"><i class="fa fa-plus-square" style="font-size:24px"></i> Responder</a>
+
                                 </td>
                             </tr>
+                           
                         }
                     </tbody>
                 </table>
@@ -126,4 +146,4 @@
 
                 </div>
             </div>
-</div>
+ 

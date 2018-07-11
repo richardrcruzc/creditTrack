@@ -10,7 +10,7 @@
 <div class="container">
     <h2>Consultar Historial Crediticio Persona</h2>
     <div class="panel-group">
-        <form asp-action="AgregarHistorial">
+        <form asp-action="AgregarHistorial"  enctype="multipart/form-data">
 
             <div class="panel panel-primary">
                 <div class="panel-heading">Agregar Historial de Créditos</div>
@@ -64,20 +64,38 @@
                     {
                         <div class="alert alert-success">
                             <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <div   class="text-success">@Model.Resultados</div>
+                            <div class="text-success">@Model.Resultados</div>
                         </div>
                     }
 
+                        <div class="form-group">
+                            <textarea asp-for="Description" rows="5" cols="40" placeholder="Favor describir la situacion lo mas detallada posible, especificando el monto y la fecha"></textarea>
+                           <br />
+                            <span asp-validation-for="Description" class="text-danger"></span>
 
-                    <textarea asp-for="Description" rows="5" cols="40" placeholder="Favor describir la situacion lo mas detallada posible, especificando el monto y la fecha"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Crear" class="btn btn-default" />
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-md-2 control-label">Evidencias: contrato, factura, pagare, etc.</label>
+                            <div class="col-md-10">
+                                <label for="Files" class="btn btn-primary btn-block">Seleccionar imagenes/uno o mas archivos</label>
+
+
+                                <input type="file" id="Files" name="Files" accept="image/*" style="display: none" multiple>
+                                <span asp-validation-for="Files" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Crear" class="btn btn-default" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
         </form>
 

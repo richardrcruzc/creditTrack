@@ -11,7 +11,7 @@ namespace CreditReport.Models.AccountViewModels
     {
 
         [Required(ErrorMessage = "Favor Digitar el Nombre del Representante o Dueño.")]
-        [StringLength(100, ErrorMessage = "El {0} debe de ser almenos {2} y un máxino de {1} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "El {0} debe de ser almenos {2} y un máxino de {1} caracteres.", MinimumLength = 3)]
         [DataType(DataType.Text)]
         [Display(Name = "Nombre y Apellido")]
         public string Name { get; set; }
@@ -50,7 +50,7 @@ namespace CreditReport.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "El 'Password' es requerido.")]
-        [StringLength(100, ErrorMessage = "El {0} debe ser {2} caracteres minimo y un maximo de {1} caracteres", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "El {0} debe ser {2} caracteres minimo y un maximo de {1} caracteres", MinimumLength = 4)]
         [DataType(DataType.Password, ErrorMessage = "El password debe tener como mínimo 6 caracteres y distingue mayúsculas de minúsculas. ")]
         [Display(Name = "Password")]
         public string Password { get; set; }

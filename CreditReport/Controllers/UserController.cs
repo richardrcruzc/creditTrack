@@ -51,8 +51,8 @@ namespace CreditReport.Controllers
             UserViewModel model = new UserViewModel();
             model.ApplicationRoles = roleManager.Roles.Select(r => new SelectListItem
             {
-                Text = r.Name,
-                Value = r.Id
+                Text = r.Name.ToString(),
+                Value = r.Id.ToString()
             }).ToList();
             return PartialView("_AddUser", model);
         }
@@ -105,14 +105,14 @@ namespace CreditReport.Controllers
             model.Provincias = _context.Provinces
                 .Where(p=>p.MotherProvince == null)
                 .OrderBy(n=>n.Name)
-                .Select(p=> new SelectListItem { Text = p.Name, Value=p.Name }).ToList();
+                .Select(p=> new SelectListItem { Text = p.Name.ToString(), Value=p.Name.ToString() }).ToList();
 
             if (!string.IsNullOrEmpty(model.Provincia))
             {
                 model.Municipios = _context.Provinces
                   .Where(p => p.MotherProvince.Name == model.Provincia)
                   .OrderBy(n => n.Name)
-                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+                  .Select(p => new SelectListItem { Text = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
             }
 
             if (!String.IsNullOrEmpty(id))
@@ -183,14 +183,14 @@ namespace CreditReport.Controllers
             model.Provincias = _context.Provinces
                 .Where(p => p.MotherProvince == null)
                 .OrderBy(n => n.Name)
-                .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+                .Select(p => new SelectListItem { Text = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
 
             if (!string.IsNullOrEmpty(model.Provincia))
             {
                 model.Municipios = _context.Provinces
                   .Where(p => p.MotherProvince.Name == model.Provincia)
                   .OrderBy(n => n.Name)
-                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+                  .Select(p => new SelectListItem { Text = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
             }
             return PartialView("_EditUser", model);
         }
@@ -204,7 +204,7 @@ namespace CreditReport.Controllers
             var municipios = _context.Provinces 
                 .Where(p => p.MotherProvince == provincia)
                 .OrderBy(n => n.Name)
-                .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+                .Select(p => new SelectListItem { Text = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
 
             return Json(municipios);
         }

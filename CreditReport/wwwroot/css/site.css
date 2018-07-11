@@ -154,10 +154,12 @@ h4 {
     color: #fff !important;
 }
 
-footer .glyphicon {
+.footer .glyphicon {
     font-size: 20px;
     margin-bottom: 20px;
     color: #f4511e;
+    position: fixed;
+
 }
 
 .slideanim {

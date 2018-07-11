@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,8 @@ namespace CreditReport.Models.People
 
         public string Resultados { get; set; }
 
+        [Required(ErrorMessage = "Debe seleccionar imagenes/uno o mas archivos")]
+        public List<IFormFile> Files { get; set; }
 
         [Display(Name = "Nombre Completo")]
         public string FullName

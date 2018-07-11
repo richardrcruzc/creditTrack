@@ -27,6 +27,9 @@ namespace CreditReport.Data.PersonalInformation
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
 
+        [Display(Name = "Archivos de imagenes")] 
+        public ICollection<Picture> Pictures { get; set; }
+
 
     }
 

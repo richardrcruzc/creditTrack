@@ -219,14 +219,14 @@ namespace CreditReport.Controllers
             model.Provincias = _context.Provinces
                .Where(p => p.MotherProvince == null)
                .OrderBy(n => n.Name)
-               .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+               .Select(p => new SelectListItem() { Text  = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
 
             if (!string.IsNullOrEmpty(model.Provincia))
             {
                 model.Municipios = _context.Provinces
                   .Where(p => p.MotherProvince.Name == model.Provincia)
                   .OrderBy(n => n.Name)
-                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+                  .Select(p => new SelectListItem (){ Text = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
             }
 
             return View(model);
@@ -278,14 +278,14 @@ namespace CreditReport.Controllers
             model.Provincias = _context.Provinces
    .Where(p => p.MotherProvince == null)
    .OrderBy(n => n.Name)
-   .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+   .Select(p => new SelectListItem { Text = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
 
             if (!string.IsNullOrEmpty(model.Provincia))
             {
                 model.Municipios = _context.Provinces
                   .Where(p => p.MotherProvince.Name == model.Provincia)
                   .OrderBy(n => n.Name)
-                  .Select(p => new SelectListItem { Text = p.Name, Value = p.Name }).ToList();
+                  .Select(p => new SelectListItem { Text = p.Name.ToString(), Value = p.Name.ToString() }).ToList();
             }
             // If we got this far, something failed, redisplay form
             return View(model);

@@ -4,14 +4,16 @@ using CreditReport.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreditReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180627210235_errorText")]
+    partial class errorText
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,23 +124,6 @@ namespace CreditReport.Migrations
                     b.HasKey("PersonID");
 
                     b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Picture", b =>
-                {
-                    b.Property<int>("PictureID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CreditHistoryID");
-
-                    b.Property<string>("PicturePath");
-
-                    b.HasKey("PictureID");
-
-                    b.HasIndex("CreditHistoryID");
-
-                    b.ToTable("Picture");
                 });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.Province", b =>
@@ -398,13 +383,6 @@ namespace CreditReport.Migrations
                     b.HasOne("CreditReport.Data.PersonalInformation.Person", "Person")
                         .WithMany("CreditHistories")
                         .HasForeignKey("PersonID");
-                });
-
-            modelBuilder.Entity("CreditReport.Data.PersonalInformation.Picture", b =>
-                {
-                    b.HasOne("CreditReport.Data.PersonalInformation.CreditHistory", "CreditHistory")
-                        .WithMany("Pictures")
-                        .HasForeignKey("CreditHistoryID");
                 });
 
             modelBuilder.Entity("CreditReport.Data.PersonalInformation.Province", b =>

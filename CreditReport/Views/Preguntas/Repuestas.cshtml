@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 <div class="container">
-    <h2>Preguntas por personas</h2>
+    <h2>Preguntar por personas</h2>
 
     <div class="panel-group">
   
@@ -15,30 +15,33 @@
 
                 <form class="navbar-form navbar-left" method="post" action="/preguntas/AgregarPregunta">
                     <input type="hidden" asp-for="QuestionID" />
-                    <input name="NuevaPregunta" class="form-control" />
                     <div class="btn-group">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            Agregar
-                        </button>
-                        
-                        <a asp-action="Index" class="btn btn-default">
-                            Regresar
-                        </a>
+                        @*<input name="NuevaPregunta" class="form-control" />*@
+                        <textarea name="NuevaPregunta" rows="5" cols="40" placeholder="Favor describir la situacion lo mas detallada posible"></textarea>
                     </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Agregar
+                            </button>
 
-                    @if (Model == null)
-            {
-                        <div class="alert alert-warning">
-                            <strong>Información no Encontrada</strong>
+                            <a asp-action="Index" class="btn btn-default">
+                                Regresar
+                            </a>
                         </div>
-                    }
+
+                        @if (Model == null)
+                        {
+                            <div class="alert alert-warning">
+                                <strong>Información no Encontrada</strong>
+                            </div>
+                        }
                 </form>
             </div>
         </div>
 
         <div class="panel panel-info">
-            <div class="panel-heading">@Model.Description</div>
+            <div class="panel-heading"><i class="fa fa-question-circle" style="font-size:24px"></i> @Model.Description</div>
             <div class="panel-body">
 
 

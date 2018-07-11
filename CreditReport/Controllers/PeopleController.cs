@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using CreditReport.Models.People;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CreditReport.Controllers
 {
@@ -128,7 +129,7 @@ namespace CreditReport.Controllers
             } 
 
             var person = await _context.Persons
-                 .Include(c=>c.CreditHistories)
+                 .Include(c=>c.CreditHistories).ThenInclude(i=>i.Pictures)                 
                  .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.PersonID == id);
             if (person == null)
@@ -151,13 +152,20 @@ namespace CreditReport.Controllers
                     continue;
                 var user = await _userManager.FindByEmailAsync(p.CreateBy);
                 if (user == null)
-                    continue;
+                    continue; 
+
+                var picturesModel = new List<PictureModel>();
+                foreach (var picture in p.Pictures)
+                    picturesModel.Add(new PictureModel { PictureID = picture.PictureID, PicturePath = picture.PicturePath });
+                 
+
                 model.History.Add(new CreditHistoryModel {
                      Description = p.Note ,
                       Empresa = user.Empresa,
                        Fecha = p.CreateDate,
                     CreditHistoryID = p.CreditHistoryID,
                     PersonID = person.PersonID,
+                    PictureModel = picturesModel
                 });
 
 
@@ -187,6 +195,14 @@ namespace CreditReport.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (p.Files.Count() <= 0)
+                    {
+                        ModelState.AddModelError("", "Favor seleccionar uno o mas archivos de evidencia");
+                        return View(p);
+                    }
+
+
+
                     var user = _userManager.GetUserName(User);
                     var persona = new Person
                     {
@@ -203,13 +219,44 @@ namespace CreditReport.Controllers
                         credit
                     };
 
+                    //save images
+
+                    var FullfilePath = System.IO.Directory.GetCurrentDirectory();
+                    var relativePath = @"\images\Upload\Evidencia_";
+                    foreach (var formFile in p.Files)
+                    {
+                        if (formFile.Length > 0)
+                        {
+                            string strFileExtension = System.IO.Path.GetExtension(formFile.FileName);
+
+                            var relativePath1 = relativePath + $"{Guid.NewGuid()}{strFileExtension}";
+                            var FullfilePath1 = $"{FullfilePath}{relativePath1}";
+
+                            using (var stream = new FileStream(FullfilePath1, FileMode.Create))
+                            {
+                                await formFile.CopyToAsync(stream);
+                            }
+
+                            var picture = new Picture
+                            {
+                                PicturePath = relativePath1,
+                               CreditHistory = credit
+
+                            };
+
+                            _context.Add(picture);
+                        }
+                    }
+
                     persona.AddCreditHistory(credits);
 
                     _context.Add(persona);
-                    
-                    await _context.SaveChangesAsync();
-                    ModelState.Clear();
-                    var newP= new PeopleAddModel
+
+                  await _context.SaveChangesAsync();
+
+                    ModelState.Clear(); 
+
+                    var newP = new PeopleAddModel
                     {
                         Results = "La Persona ha Sido Creada."
                     };
@@ -253,6 +300,13 @@ namespace CreditReport.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (c.Files.Count() <= 0)
+                    {
+                        ModelState.AddModelError("", "Favor seleccionar uno o mas archivos de evidencia");
+                        return View(c);
+                    }
+
+
                     var user = _userManager.GetUserName(User);
                     var persona = _context.Persons.Where(x => x.PersonID == c.PersonID).FirstOrDefault();
                     if(persona==null)
@@ -260,16 +314,44 @@ namespace CreditReport.Controllers
 
                     var credit = new CreditHistory { Person = persona, CreateDate = DateTime.Now, Note = c.Description, CreateBy= user };
 
-                    var credits = new List<CreditHistory>();
-                    credits.Add(credit); 
+                    var credits = new List<CreditHistory>
+                    {
+                        credit
+                    };
+                    //save images
 
+                    var FullfilePath = System.IO.Directory.GetCurrentDirectory();
+                    var relativePath = @"\images\Upload\Evidencia_";
+                    foreach (var formFile in c.Files)
+                    {
+                        if (formFile.Length > 0)
+                        {
+                            string strFileExtension = System.IO.Path.GetExtension(formFile.FileName);
+
+                            var relativePath1 = relativePath + $"{Guid.NewGuid()}{strFileExtension}";
+                            var FullfilePath1 = $"{FullfilePath}{relativePath1}";
+
+                            using (var stream = new FileStream(FullfilePath1, FileMode.Create))
+                            {
+                                await formFile.CopyToAsync(stream);
+                            }
+
+                            var picture = new Picture
+                            {
+                                PicturePath = relativePath1,
+                              CreditHistory = credit
+
+                            };
+
+                            _context.Add(picture);
+                        }
+                    }
                     persona.AddCreditHistory(credits);
 
-                    _context.Update(persona);
-
+                    _context.Update(persona); 
+                   
                     await _context.SaveChangesAsync();
                     ModelState.Clear();
-
 
                     c.Resultados =  "El historial hasido creado.";
                     c.Description = "";

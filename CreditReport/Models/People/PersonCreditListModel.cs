@@ -7,6 +7,16 @@ using System.Threading.Tasks;
 
 namespace CreditReport.Models
 {
+
+    public class PictureModel
+    {
+        public int PictureID { get; set; }
+        public string PicturePath { get; set; }
+
+        public CreditHistoryModel CreditHistory { get; set; }
+
+    }
+
     public class PersonCreditListModel
     {
         public PersonCreditListModel()
@@ -30,6 +40,8 @@ namespace CreditReport.Models
 
           public string LastName { get; set; }
 
+      
+        
 
         [DisplayName("Nombre(s) y Apellido(s)")]
         public string FullName
@@ -53,6 +65,12 @@ namespace CreditReport.Models
 
     public class CreditHistoryModel
     {
+
+        public CreditHistoryModel()
+        {
+            PictureModel = new List<PictureModel>();
+
+        }
         public int CreditHistoryID { get; set; }
         public int PersonID { get; set; }
 
@@ -62,7 +80,7 @@ namespace CreditReport.Models
         public DateTime  Fecha { get; set; }
         public string Empresa { get; set; }
 
-
+        public List<PictureModel> PictureModel { get; set; }
 
     }
 }

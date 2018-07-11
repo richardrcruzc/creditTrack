@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,10 @@ namespace CreditReport.Models.People
         public string Description { get; set; }
 
         public string Results { get; set; }
+
+        [Required(ErrorMessage = "Debe seleccionar imagenes/uno o mas archivos")]
+        public List<IFormFile> Files { get; set; }
+        
 
     }
 }
